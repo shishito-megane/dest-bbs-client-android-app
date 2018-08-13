@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dest BBS</string>
+    <string name="lab_name">Laboratory</string>
+    <string name="welcome_msg">Welcome to our %1$s!</string>
 </resources>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">行先掲示板</string>
+    <string name="lab_name">研究室</string>
+    <string name="welcome_msg">ようこそ%1$sへ！</string>
 </resources>
