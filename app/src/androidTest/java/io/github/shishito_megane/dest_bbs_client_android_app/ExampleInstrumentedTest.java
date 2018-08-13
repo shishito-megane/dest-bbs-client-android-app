@@ -1,4 +1,4 @@
-package shishito_megane.github.io.dest_bbs_client_android_app;
+package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("shishito_megane.github.io.dest_bbs_client_android_app", appContext.getPackageName());
+        assertEquals("io.github.shishito_megane.dest_bbs_client_android_app", appContext.getPackageName());
     }
 }

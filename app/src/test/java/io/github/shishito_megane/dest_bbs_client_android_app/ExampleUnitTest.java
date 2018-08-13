@@ -1,4 +1,4 @@
-package shishito_megane.github.io.dest_bbs_client_android_app;
+package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import org.junit.Test;
 
