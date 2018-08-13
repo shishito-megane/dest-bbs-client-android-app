@@ -2,4 +2,5 @@
     <string name="app_name">Dest BBS</string>
     <string name="lab_name">Laboratory</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
+    <string name="notice_tap">Please tap the person you want.</string>
 </resources>

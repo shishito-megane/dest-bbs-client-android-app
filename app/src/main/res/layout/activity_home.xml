@@ -7,14 +7,47 @@
     tools:context=".HomeActivity">
 
     <TextView
-        android:id="@+id/textView_welcome_msg"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewWelcomeMsg"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="@string/welcome_msg"
-        android:textSize="36sp"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="?attr/dialogPreferredPadding"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/welcome_msg" />
+
+    <TextView
+        android:id="@+id/textViewNoticeTap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:contentDescription="@string/notice_tap"
+        android:text="@string/notice_tap"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="?attr/dialogPreferredPadding"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/notice_tap" />
+
+    <View
+        android:id="@+id/Separator"
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:layout_marginBottom="24dp"
+        android:background="#dd000000"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNoticeTap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

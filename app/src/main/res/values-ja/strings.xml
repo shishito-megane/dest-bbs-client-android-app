@@ -3,4 +3,5 @@
     <string name="app_name">行先掲示板</string>
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
+    <string name="notice_tap">ご用の方をタップしてください</string>
 </resources>
