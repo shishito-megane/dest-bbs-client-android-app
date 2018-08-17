@@ -1,8 +1,10 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
+
+    public static final String IMAGE_ID = "io.github.shishito_megane.dest_bbs_client_android_app.IMAGE_ID";
 
     // 表示する画像の名前（拡張子無し）
     private String members[] = {
@@ -25,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
 
     // Resource IDを格納するarray
     private List<Integer> imgList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +72,27 @@ public class HomeActivity extends AppCompatActivity {
                 members
         );
 
-        // gridViewにadapterをセット
+        // set gridView adapter
         gridview.setAdapter(adapter);
 
-//        // set grid view
-//        GridView gridView = (GridView) findViewById(R.id.gridViewMember);
-//        gridView.setAdapter(new MemberAdapter(this));
+        // Create a message handling object as an anonymous class.
+        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+            public void onItemClick(
+                    AdapterView parent,
+                    View v,
+                    int position,
+                    long id
+            ) {
+                // Do something in response to the click
+                Intent intent = new Intent(getApplication(), PersonActivity.class);
+                intent.putExtra(IMAGE_ID, imgList.get(position));
+                startActivity( intent );
+            }
+        };
+
+        gridview.setOnItemClickListener(mMessageClickedHandler);
 
     }
-
 
 }
 
