@@ -3,4 +3,9 @@
     <string name="lab_name">Laboratory</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
     <string name="notice_tap">Please tap the person you want.</string>
+    <string name="call_person">Call</string>
+    <string name="open_person_menu">It is me</string>
+    <string name="member_name">Donald John Trump</string>
+    <string name="member_detail">President of the United States of America.</string>
+    <string name="person_image_view_detail">Member Image</string>
 </resources>

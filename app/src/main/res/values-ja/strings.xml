@@ -4,4 +4,9 @@
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
+    <string name="call_person">この人を呼ぶ</string>
+    <string name="open_person_menu">私です</string>
+    <string name="member_name">安倍 晋三</string>
+    <string name="member_detail">内閣総理大臣</string>
+    <string name="person_image_view_detail">メンバーの写真</string>
 </resources>

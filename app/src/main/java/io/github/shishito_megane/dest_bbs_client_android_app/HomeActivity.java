@@ -13,9 +13,10 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static final String IMAGE_ID = "io.github.shishito_megane.dest_bbs_client_android_app.IMAGE_ID";
+    public static final String PERSON_IMAGE_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGE_ID";
+    public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
 
-    // 表示する画像の名前（拡張子無し）
+    // member ID (person name) （no extension）
     private String members[] = {
             "sample_0",
             "sample_1",
@@ -27,8 +28,11 @@ public class HomeActivity extends AppCompatActivity {
             "sample_7",
     };
 
-    // Resource IDを格納するarray
+    // Resource ID (Member Image ID)
     private List<Integer> imgList = new ArrayList<>();
+
+    // Member ID
+    private List<String> memberList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // hide navigation var
         View decor = this.getWindow().getDecorView();
+        decor.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
 
         // set welcome msg
         String lab_name = getString(R.string.lab_name);
@@ -46,22 +56,23 @@ public class HomeActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textViewWelcomeMsg);
         textView.setText(welcome_msg);
 
-        // hide navigation var
-        decor.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        );
-
-        // for-each member名をR.drawable.名前としてintに変換してarrayに登録
+        // for-each, convert memberID to R.drawable.XX and convert to int, register array
+        // for-each, member名をR.drawable.名前としてintに変換してarrayに登録
         for (String member : members) {
             int imageId = getResources().getIdentifier(
                     member, "drawable", getPackageName());
             imgList.add(imageId);
         }
+        // for-each, registration memberID to array
+        for (String member : members) {
+            String memberId = member;
+            memberList.add(memberId);
+        }
 
-        // GridViewのインスタンスを生成
+        // generation GridView instance
         GridView gridview = findViewById(R.id.gridViewMember);
+
+        // generation GridAdapter instance, inherited BaseAdapter
         // BaseAdapter を継承したGridAdapterのインスタンスを生成
         // 子要素のレイアウトファイル grid_items.xml を
         // activity_main.xml に inflate するためにGridAdapterに引数として渡す
@@ -83,9 +94,9 @@ public class HomeActivity extends AppCompatActivity {
                     int position,
                     long id
             ) {
-                // Do something in response to the click
                 Intent intent = new Intent(getApplication(), PersonActivity.class);
-                intent.putExtra(IMAGE_ID, imgList.get(position));
+                intent.putExtra(PERSON_IMAGE_ID, imgList.get(position));
+                intent.putExtra(PERSON_ID, memberList.get(position));
                 startActivity( intent );
             }
         };

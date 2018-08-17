@@ -7,15 +7,70 @@
     tools:context=".PersonActivity">
 
     <ImageView
-        android:id="@+id/image_person_view"
+        android:id="@+id/imageViewPerson"
         android:layout_width="0dp"
         android:layout_height="500dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/person_image_view_detail"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:text="@string/call_person"
+        android:textColor="@color/colorPrimary"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonItsMe"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/call_person" />
+
+    <Button
+        android:id="@+id/buttonItsMe"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/open_person_menu"
+        android:textColor="@color/colorPrimary"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonCall"
+        tools:text="@string/open_person_menu" />
+
+    <TextView
+        android:id="@+id/textViewPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/member_name"
+        android:textSize="64sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewPerson"
+        tools:text="@string/member_name" />
+
+    <TextView
+        android:id="@+id/textViewPersonDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/member_detail"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPersonName"
+        tools:text="@string/member_detail" />
 
 </android.support.constraint.ConstraintLayout>
