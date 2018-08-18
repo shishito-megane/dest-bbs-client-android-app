@@ -8,6 +8,8 @@
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
+    <string name="action_bar_setting">設定</string>
+    <string name="action_bar_help">ヘルプ</string>
     <!---->
     <string name="person_image_view_detail">メンバーの写真</string>
     <string name="member_name">安倍 晋三</string>

@@ -3,6 +3,8 @@ package io.github.shishito_megane.dest_bbs_client_android_app;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -105,6 +107,39 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    // メニューをActivity上に設置する
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 参照するリソースは上でリソースファイルに付けた名前と同じもの
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // メニューが選択されたときの処理
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)  {
+        switch (item.getItemId()) {
+            case R.id.menuSetting:
+                // transition HomeActivity
+                Intent intent_setting = new Intent(
+                        this,
+                        SettingActivity.class
+                );
+                startActivity(intent_setting);
+                return true;
+
+            case R.id.menuHelp:
+                Intent intent_help = new Intent(
+                        this,
+                        HelpActivity.class
+                );
+                startActivity(intent_help);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 
 
