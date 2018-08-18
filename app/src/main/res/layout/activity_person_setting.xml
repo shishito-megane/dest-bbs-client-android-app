@@ -160,7 +160,7 @@
         tools:text="@string/thumbnail_setting_title" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewPersonDetail"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="24dp"
@@ -187,7 +187,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPersonDetail"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
     <TextView
@@ -199,7 +199,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/change_thumbnail_msg"
         app:layout_constraintBottom_toTopOf="@+id/divider7"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPersonDetail"
         app:layout_constraintTop_toBottomOf="@+id/divider6" />
 
     <View
@@ -221,7 +221,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/delete_thumbnail_msg"
         app:layout_constraintBottom_toTopOf="@+id/divider8"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPersonDetail"
         app:layout_constraintTop_toBottomOf="@+id/divider7"
         tools:text="@string/delete_thumbnail_msg" />
 
