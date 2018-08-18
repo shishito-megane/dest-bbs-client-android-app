@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">行先掲示板</string>
-
+    <!---->
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
-
+    <!---->
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
-
+    <!---->
     <string name="person_image_view_detail">メンバーの写真</string>
     <string name="member_name">安倍 晋三</string>
     <string name="member_detail">内閣総理大臣</string>
-
+    <!---->
     <string name="call_person">この人を呼ぶ</string>
     <string name="open_person_menu">私です</string>
-
+    <!---->
     <string name="call_dialog_title">呼出</string>
     <string name="call_dialog_msg">この人を呼び出しますか？</string>
     <string name="finish_calling_toast">呼び出しました.\nしばらくお待ちください．</string>
     <string name="cancled_calling_toast">呼び出しを中止しました．</string>
     <string name="absent_msg">只今席を外しております．\n急用の場合は次へご連絡ください．\n%1$s</string>
-
+    <!---->
     <string name="update_enter_room_title">在室状況を更新</string>
     <string name="finish_update_status">記録しました．</string>
     <string name="cancled_update_status">記録をキャンセルしました．</string>
+    <!---->
+    <string name="thumbnail_setting_title">サムネイルの設定</string>
+    <string name="change_thumbnail_msg">サムネイルを変更する</string>
+    <string name="change_thumbnail_button">変更</string>
+    <string name="delete_thumbnail_msg">サムネイルを削除する</string>
+    <string name="delete_thumbnail_button">削除</string>
+    <!---->
+    <string name="person_setting_title">個人情報の設定</string>
+    <string name="enter_person_name_msg">名前を入力してください</string>
+    <string name="enter_person_name_button">保存</string>
+    <string name="enter_person_address_msg">連絡先を入力してください</string>
+    <string name="enter_person_address_button">保存</string>
+    <string name="enter_person_detail_msg">自己紹介文を入力してください</string>
+    <string name="enter_person_detail_button">保存</string>
+    <!---->
+    <string name="calender_setting_title">カレンダーの設定</string>
+    <string name="create_new_calender_msg">新たにカレンダーを作成する</string>
+    <string name="create_new_calender_button">作成</string>
+    <string name="coordinate_calender_msg">既存のカレンダーと連携する</string>
+    <string name="coordinate_calender_button">連携</string>
+    <string name="release_calender_msg">連携を解除する</string>
+    <string name="release_calender_button">解除</string>
+    <!---->
+    <string name="other_setting_title">その他の設定</string>
+    <string name="delete_person_msg">このメンバーの削除</string>
+    <string name="delete_person_button">削除</string>
 
 </resources>
