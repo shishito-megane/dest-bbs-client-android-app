@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="status_entering_room_array">
+        <item>入室を記録</item>
+    </string-array>
+    <string-array name="status_leaving_room_array">
+        <item>講義に行く</item>
+        <item>会議に行く</item>
+        <item>ちょっと外出</item>
+        <item>帰宅する</item>
+    </string-array>
+</resources>

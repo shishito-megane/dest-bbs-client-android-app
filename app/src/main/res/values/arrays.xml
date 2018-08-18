@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="status_entering_room_array">
+        <item>Record entering room</item>
+    </string-array>
+    <string-array name="status_leaving_room_array">
+        <item>Go to class</item>
+        <item>Go to Meeting</item>
+        <item>Temporary Outing</item>
+        <item>Return Home</item>
+    </string-array>
+</resources>

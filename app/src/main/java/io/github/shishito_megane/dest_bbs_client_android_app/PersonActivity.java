@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,28 @@ public class PersonActivity extends AppCompatActivity {
         // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(person_name);
+
+        // call button function
+        Button dialogCall = findViewById(R.id.buttonCall);
+        dialogCall.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                CallDialogFlagment dialog = new CallDialogFlagment();
+                dialog.show(getFragmentManager(), "call");
+            }
+        });
+
+        // call button function
+        Button dialogItsMe = findViewById(R.id.buttonItsMe);
+        dialogItsMe.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ItsMeDialogFlagment dialog = new ItsMeDialogFlagment();
+                dialog.show(getFragmentManager(), "itsme");
+            }
+        });
 
     }
 }
