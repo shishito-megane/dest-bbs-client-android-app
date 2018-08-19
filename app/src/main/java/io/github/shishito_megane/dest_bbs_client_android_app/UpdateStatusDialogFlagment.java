@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItsMeDialogFlagment extends DialogFragment {
+public class UpdateStatusDialogFlagment extends DialogFragment {
 
     public Dialog onCreateDialog(Bundle savedInstanceState){
 

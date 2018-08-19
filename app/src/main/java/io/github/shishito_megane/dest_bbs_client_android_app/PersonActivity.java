@@ -67,7 +67,7 @@ public class PersonActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                ItsMeDialogFlagment dialog = new ItsMeDialogFlagment();
+                UpdateStatusDialogFlagment dialog = new UpdateStatusDialogFlagment();
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
