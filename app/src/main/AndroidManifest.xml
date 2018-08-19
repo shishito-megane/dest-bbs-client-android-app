@@ -39,9 +39,7 @@
         <activity android:name=".CalenderSettingActivity" />
         <activity android:name=".PersonSettingActivity" />
         <activity android:name=".HelpActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"/>
+
     </application>
 
 </manifest>
