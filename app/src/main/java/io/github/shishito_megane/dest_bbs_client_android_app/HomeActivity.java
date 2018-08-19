@@ -23,7 +23,6 @@ import static io.github.shishito_megane.dest_bbs_client_android_app.DbContract.M
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static final String PERSON_IMAGE_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGE_ID";
     public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
 
     @Override
@@ -109,8 +108,7 @@ public class HomeActivity extends AppCompatActivity {
                     long id
             ) {
                 Intent intent = new Intent(getApplication(), PersonActivity.class);
-                intent.putExtra(PERSON_IMAGE_ID, memberImageIntegerList.get(position));
-                intent.putExtra(PERSON_ID, memberNameList.get(position));
+                intent.putExtra(PERSON_ID, memberIdList.get(position));
                 startActivity( intent );
             }
         };
@@ -242,10 +240,10 @@ public class HomeActivity extends AppCompatActivity {
         Log.d("DB", "メンバーの画像:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
-            String memberName = cursor.getString(
+            String memberImageID = cursor.getString(
                     cursor.getColumnIndexOrThrow(MemberTable.COLUMN_IMAGE)
             );
-            memberImageList.add(memberName);
+            memberImageList.add(memberImageID);
         }
         cursor.close();
         return memberImageList;
