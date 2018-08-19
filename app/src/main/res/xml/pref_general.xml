@@ -1,0 +1,82 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- 注：EditTextPreferenceはEditText属性を受け入れます。 -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <!-- 注：EditTextPreferenceの要約は、アクティビティコードによってその値に設定する必要があります。 -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_lab_name"
+        android:inputType="textCapWords"
+        android:key="lab_name"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_lab_name" />
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_address"
+        android:inputType="textCapWords"
+        android:key="default_address"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_address" />
+
+    <!--&lt;!&ndash; NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to dismiss it. &ndash;&gt;-->
+    <!--&lt;!&ndash; 注：ボタンを非表示にしてUIを簡略化します。 ユーザーはダイアログの外をタッチして閉じることができます。 &ndash;&gt;-->
+    <!--&lt;!&ndash; NOTE: ListPreference's summary should be set to its value by the activity code. &ndash;&gt;-->
+    <!--&lt;!&ndash; 注：ListPreferenceの要約は、アクティビティコードによってその値に設定する必要があります。 &ndash;&gt;-->
+    <!--<ListPreference-->
+        <!--android:defaultValue="-1"-->
+        <!--android:entries="@array/pref_example_list_titles"-->
+        <!--android:entryValues="@array/pref_example_list_values"-->
+        <!--android:key="example_list"-->
+        <!--android:negativeButtonText="@null"-->
+        <!--android:positiveButtonText="@null"-->
+        <!--android:title="@string/pref_title_add_friends_to_messages" />-->
+
+    <!--&lt;!&ndash; NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to dismiss it. &ndash;&gt;-->
+    <!--&lt;!&ndash; 注：ボタンを非表示にしてUIを簡略化します。 ユーザーはダイアログの外をタッチして閉じることができます。 &ndash;&gt;-->
+    <!--&lt;!&ndash; NOTE: ListPreference's summary should be set to its value by the activity code. &ndash;&gt;-->
+    <!--&lt;!&ndash; 注：ListPreferenceのサマリーは、アクティビティコードによってその値に設定する必要があります。 &ndash;&gt;-->
+    <!--<ListPreference-->
+        <!--android:defaultValue="180"-->
+        <!--android:entries="@array/pref_sync_frequency_titles"-->
+        <!--android:entryValues="@array/pref_sync_frequency_values"-->
+        <!--android:key="sync_frequency"-->
+        <!--android:negativeButtonText="@null"-->
+        <!--android:positiveButtonText="@null"-->
+        <!--android:title="@string/pref_title_sync_frequency" />-->
+
+    <!--&lt;!&ndash; This preference simply launches an intent when selected. Use this UI sparingly, per design guidelines. &ndash;&gt;-->
+    <!--&lt;!&ndash; このプリファレンスは、単に選択するとインテントを開始します。 デザインガイドラインに従ってこのUIを控えめに使用してください。&ndash;&gt;-->
+    <!--<Preference android:title="@string/pref_title_system_sync_settings">-->
+        <!--<intent android:action="android.settings.SYNC_SETTINGS" />-->
+    <!--</Preference>-->
+
+    <!--&lt;!&ndash; A 'parent' preference, which enables/disables child preferences (below) when checked/unchecked. &ndash;&gt;-->
+    <!--<SwitchPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="notifications_new_message"-->
+        <!--android:title="@string/pref_title_new_message_notifications" />-->
+
+    <!--&lt;!&ndash; Allows the user to choose a ringtone in the 'notification' category. &ndash;&gt;-->
+    <!--&lt;!&ndash; NOTE: This preference will be enabled only when the checkbox above is checked. &ndash;&gt;-->
+    <!--&lt;!&ndash; NOTE: RingtonePreference's summary should be set to its value by the activity code. &ndash;&gt;-->
+    <!--<RingtonePreference-->
+        <!--android:defaultValue="content://settings/system/notification_sound"-->
+        <!--android:dependency="notifications_new_message"-->
+        <!--android:key="notifications_new_message_ringtone"-->
+        <!--android:ringtoneType="notification"-->
+        <!--android:title="@string/pref_title_ringtone" />-->
+
+    <!--&lt;!&ndash; NOTE: This preference will be enabled only when the checkbox above is checked. &ndash;&gt;-->
+    <!--<SwitchPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:dependency="notifications_new_message"-->
+        <!--android:key="notifications_new_message_vibrate"-->
+        <!--android:title="@string/pref_title_vibrate" />-->
+
+</PreferenceScreen>

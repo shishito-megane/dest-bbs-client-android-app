@@ -56,7 +56,7 @@ public class CallDialogFlagment extends DialogFragment {
                 // display toast
                 Toast toast = Toast.makeText(
                         getActivity(),
-                        R.string.canceled_calling_toast,
+                        R.string.cancelled_calling_toast,
                         Toast.LENGTH_SHORT
                 );
                 toast.show();

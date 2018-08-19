@@ -1,32 +1,42 @@
 <resources>
     <string name="app_name">Dest BBS</string>
-    <!---->
+    <!-- General -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <!---->
+    <!-- HomeActivity-->
     <string name="lab_name">Laboratory</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
     <string name="notice_tap">Please tap the person you want.</string>
     <string name="action_bar_setting">Setting</string>
     <string name="action_bar_help">Help</string>
-    <!---->
+    <!-- PersonActivity -->
     <string name="person_image_view_detail">Member Image</string>
     <string name="member_name">Donald John Trump</string>
     <string name="member_detail">President of the United States of America.</string>
-    <!---->
     <string name="call_person">Call</string>
     <string name="open_person_menu">It is me</string>
-    <!---->
+    <!-- CallDialogFlagment-->
     <string name="call_dialog_title">Calling</string>
     <string name="call_dialog_msg">Do you call this person?</string>
     <string name="finish_calling_toast">I called.\nPlease wait for a while.</string>
-    <string name="canceled_calling_toast">I canceled calling.</string>
+    <string name="cancelled_calling_toast">I canceled calling.</string>
     <string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>
-    <!---->
+    <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">Update status</string>
     <string name="finish_update_status">I recorded.</string>
     <string name="cancled_update_status">I canceled recording.</string>
-    <!---->
+
+    <!-- SettingsActivity -->
+    <string name="title_activity_settings">Settings</string>
+    <!-- Settings General-->
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_lab_name">Lab name</string>
+    <string name="pref_default_lab_name">Laboratory</string>
+    <string name="pref_title_address">Default contact address</string>
+    <string name="pref_default_address">foo\@gmail.com</string>
+    <!-- Settings Member-->
+    <string name="pref_header_members">Members</string>
+
     <string name="thumbnail_setting_title">Thumbnail setting</string>
     <string name="change_thumbnail_msg">Change thumbnail</string>
     <string name="change_thumbnail_button">Change</string>

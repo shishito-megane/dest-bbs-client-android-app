@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">行先掲示板</string>
-    <!---->
+    <!-- General -->
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
-    <!---->
+    <!-- HomeActivity-->
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
     <string name="action_bar_setting">設定</string>
     <string name="action_bar_help">ヘルプ</string>
-    <!---->
+    <!-- PersonActivity -->
     <string name="person_image_view_detail">メンバーの写真</string>
     <string name="member_name">安倍 晋三</string>
     <string name="member_detail">内閣総理大臣</string>
-    <!---->
     <string name="call_person">この人を呼ぶ</string>
     <string name="open_person_menu">私です</string>
-    <!---->
+    <!-- CallDialogFlagment-->
     <string name="call_dialog_title">呼出</string>
     <string name="call_dialog_msg">この人を呼び出しますか？</string>
     <string name="finish_calling_toast">呼び出しました.\nしばらくお待ちください．</string>
-    <string name="cancled_calling_toast">呼び出しを中止しました．</string>
+    <string name="cancelled_calling_toast">呼び出しを中止しました．</string>
     <string name="absent_msg">只今席を外しております．\n急用の場合は次へご連絡ください．\n%1$s</string>
-    <!---->
+    <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">在室状況を更新</string>
     <string name="finish_update_status">記録しました．</string>
     <string name="cancled_update_status">記録をキャンセルしました．</string>
-    <!---->
+
+    <!-- SettingsActivity -->
+    <string name="title_activity_settings">設定</string>
+    <!-- Settings General-->
+    <string name="pref_header_general">一般</string>
+    <string name="pref_title_lab_name">研究室・ゼミ・講座名</string>
+    <string name="pref_default_lab_name">研究室</string>
+    <string name="pref_title_address">デフォルトの連絡先</string>
+    <string name="pref_default_address">foo\@gmail.com</string>
+    <!-- Settings Member-->
+    <string name="pref_header_members">メンバーの設定</string>
+
     <string name="thumbnail_setting_title">サムネイルの設定</string>
     <string name="change_thumbnail_msg">サムネイルを変更する</string>
     <string name="change_thumbnail_button">変更</string>
