@@ -18,22 +18,23 @@ public class MemberAdapter extends BaseAdapter {
         TextView memberTextView;
     }
 
-    private List<Integer> mThumbIds = new ArrayList<>();
-    private String[] mMemberNameArray;
+    private List<String> mMemberNames;
+    private List<Integer> mThumbIds;
     private LayoutInflater mLayoutInflater;
     private int layoutId;
 
-    MemberAdapter(Context context,
-                         int layoutId,
-                         List<Integer> iList,
-                         String[] members) {
+    MemberAdapter(
+            Context context,
+            int layoutId,
+            List<String> memberList,
+            List<Integer> imageList) {
 
         super();
         this.mLayoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.layoutId = layoutId;
-        mThumbIds = iList;
-        mMemberNameArray = members;
+        mThumbIds = imageList;
+        mMemberNames = memberList;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,7 +60,7 @@ public class MemberAdapter extends BaseAdapter {
         }
 
         holder.memberImageView.setImageResource(mThumbIds.get(position));
-        holder.memberTextView.setText(mMemberNameArray[position]);
+        holder.memberTextView.setText(mMemberNames.get(position));
 
         return convertView;
     }
