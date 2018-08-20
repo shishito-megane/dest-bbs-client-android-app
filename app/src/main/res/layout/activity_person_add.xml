@@ -92,7 +92,7 @@
                     android:layout_marginStart="24dp"
                     android:ems="10"
                     android:hint="@string/pref_default_address"
-                    android:inputType="textEmailAddress|phone"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
