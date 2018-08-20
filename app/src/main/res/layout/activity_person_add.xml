@@ -165,12 +165,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/scrollView"
                     tools:text="@string/enter_calender_id_description" />
 
+                <Button
+                    android:id="@+id/buttonCreateNewCalender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/create_new_calender_button"
+                    android:text="@string/create_new_calender_button"
+                    tools:text="@string/create_new_calender_button" />
+
                 <EditText
                     android:id="@+id/editTextCalenderId"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="24dp"
-                    android:layout_marginStart="24dp"
                     android:ems="10"
                     android:hint="@string/default_person_calendar"
                     android:inputType="textEmailAddress"
@@ -180,6 +190,18 @@
                     tools:text="@string/default_person_calendar" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewCalenderIdResult"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:contentDescription="@string/create_new_calender_msg"
+                android:gravity="center_vertical"
+                android:text="@string/create_new_calender_msg"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                tools:text="@string/create_new_calender_msg" />
 
             <TextView
                 android:id="@+id/textViewThumbnailSettingTitle"

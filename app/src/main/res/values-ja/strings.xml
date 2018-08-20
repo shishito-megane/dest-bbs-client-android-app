@@ -67,8 +67,15 @@
     <string name="calender_setting_title">カレンダーの設定</string>
     <string name="enter_calender_id_description">ID</string>
     <string name="default_person_calendar">xxx@group.calendar.google.com</string>
-    <!--<string name="create_new_calender_msg">新たにカレンダーを作成する</string>-->
-    <!--<string name="create_new_calender_button">作成</string>-->
+    <string name="create_new_calender_button">作成</string>
+    <string name="create_new_calender_msg">新たにカレンダーを作成する場合は作成ボタンを押してください</string>
+    <string name="no_internet_connection_msg">インターネット接続を確認してください</string>
+    <string name="install_google_play_service_msg">このアプリはGoogle Play Services が必要です.
+        Google Play Services をインストールしアプリを再起動してください.</string>
+    <string name="err_create_calender_msg">カレンダーの作成を失敗しました．</string>
+    <string name="result_create_calender">カレンダーが作成されました</string>
+    <string name="cancelled_create_calender">カレンダーの作成を中止しました．</string>
+    <string name="default_calender_title">行先掲示板在室状況</string>
     <!--<string name="coordinate_calender_msg">既存のカレンダーと連携する</string>-->
     <!--<string name="coordinate_calender_button">連携</string>-->
     <!--<string name="release_calender_msg">連携を解除する</string>-->

@@ -65,8 +65,15 @@
     <string name="calender_setting_title">Calender setting</string>
     <string name="enter_calender_id_description">ID</string>
     <string name="default_person_calendar">xxx@group.calendar.google.com</string>
-    <!--<string name="create_new_calender_msg">New calendar creating</string>-->
-    <!--<string name="create_new_calender_button">Create</string>-->
+    <string name="create_new_calender_button">Create</string>
+    <string name="create_new_calender_msg">If you create new calendar, push Create button.</string>
+    <string name="no_internet_connection_msg">No network connection available.</string>
+    <string name="install_google_play_service_msg">This app requires Google Play Services.
+        Please install google Play Services on your device and relaunch this app.</string>
+    <string name="err_create_calender_msg">No results returned. Creation failed.</string>
+    <string name="result_create_calender">Calendar created.</string>
+    <string name="cancelled_create_calender">Cancelled create calendar.</string>
+    <string name="default_calender_title">Dest BBS Status</string>
     <!--<string name="coordinate_calender_msg">Coordinate existing calender</string>-->
     <!--<string name="coordinate_calender_button">Coordinate</string>-->
     <!--<string name="release_calender_msg">Release calender</string>-->
