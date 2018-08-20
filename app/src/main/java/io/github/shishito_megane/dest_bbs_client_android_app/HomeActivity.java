@@ -157,6 +157,8 @@ public class HomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    // DB
     public List<Integer> getMemberIdList() {
 
         List<Integer> memberIdList = new ArrayList<>();
