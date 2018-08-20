@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // set welcome msg
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String default_lab_name = getString(R.string.lab_name);
+        String default_lab_name = getString(R.string.pref_default_lab_name);
         String lab_name = prefs.getString("lab_name", default_lab_name);
         String welcome_msg = getString(R.string.welcome_msg, lab_name);
 
@@ -50,9 +50,9 @@ public class HomeActivity extends AppCompatActivity {
         textView.setText(welcome_msg);
 
         // get member ids
-        final List<Integer> memberIdList = getMemberIdList();
-        Log.d("DB", "長さ:"+String.valueOf(memberIdList.size()));
-        if (memberIdList.size() == 0){
+        List<Integer> memberIdListTmp = getMemberIdList();
+        Log.d("DB", "長さ:"+String.valueOf(memberIdListTmp.size()));
+        if (memberIdListTmp.size() == 0){
             saveData(
                     getString(R.string.default_person_name),
                     getString(R.string.default_person_detail),
@@ -61,7 +61,9 @@ public class HomeActivity extends AppCompatActivity {
                     getString(R.string.default_person_calendar),
                     getString(R.string.default_person_status)
             );
+            memberIdListTmp = getMemberIdList();
         }
+        final List<Integer> memberIdList = memberIdListTmp;
 
         // get member name
         final List<String> memberNameList = getMemberNameList();
