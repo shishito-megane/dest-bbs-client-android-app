@@ -36,46 +36,48 @@
     <string name="pref_default_address">foo\@gmail.com</string>
 
     <!-- Settings Person-->
-    <string name="pref_header_members">メンバーの設定</string>
+    <!--<string name="pref_header_members">メンバーの追加</string>-->
+    <string name="person_setting_title">個人情報の設定</string>
+    <string name="enter_person_name_description">名前</string>
     <string name="default_person_name">山田 太郎</string>
-    <string name="default_person_detail">ヤマダ タロウ \n
-        大学院博士1年 鈴木研究室 通信班 \n
-        \n
+    <string name="enter_person_detail_description">自己紹介文</string>
+    <string name="default_person_detail">ヤマダ タロウ  大学院博士1年 鈴木研究室 通信班 \n
         東京都出身 \n
         趣味: サーフィン \n
-        特技: 料理 \n
-        好きな食べ物: 美味しいお米! \n
-        \n
-        新米なので何事も勉強でがんばります
+        好きな食べ物: 美味しいお米!
     </string>
-    <string name="default_person_image_id">sample_0</string>
-    <string name="default_person_calendar">xxx@group.calendar.google.com</string>
-    <string name="default_person_status">out</string>
-
-    <string name="thumbnail_setting_title">サムネイルの設定</string>
-    <string name="change_thumbnail_msg">サムネイルを変更する</string>
-    <string name="change_thumbnail_button">変更</string>
-    <string name="delete_thumbnail_msg">サムネイルを削除する</string>
-    <string name="delete_thumbnail_button">削除</string>
-    <!---->
-    <string name="person_setting_title">個人情報の設定</string>
-    <string name="enter_person_name_msg">名前を入力してください</string>
-    <string name="enter_person_name_button">保存</string>
-    <string name="enter_person_address_msg">連絡先を入力してください</string>
-    <string name="enter_person_address_button">保存</string>
-    <string name="enter_person_detail_msg">自己紹介文を入力してください</string>
-    <string name="enter_person_detail_button">保存</string>
-    <!---->
     <string name="calender_setting_title">カレンダーの設定</string>
-    <string name="create_new_calender_msg">新たにカレンダーを作成する</string>
-    <string name="create_new_calender_button">作成</string>
-    <string name="coordinate_calender_msg">既存のカレンダーと連携する</string>
-    <string name="coordinate_calender_button">連携</string>
-    <string name="release_calender_msg">連携を解除する</string>
-    <string name="release_calender_button">解除</string>
+    <string name="enter_calender_id_description">ID</string>
+    <string name="default_person_calendar">xxx@group.calendar.google.com</string>
+    <!--<string name="create_new_calender_msg">新たにカレンダーを作成する</string>-->
+    <!--<string name="create_new_calender_button">作成</string>-->
+    <!--<string name="coordinate_calender_msg">既存のカレンダーと連携する</string>-->
+    <!--<string name="coordinate_calender_button">連携</string>-->
+    <!--<string name="release_calender_msg">連携を解除する</string>-->
+    <!--<string name="release_calender_button">解除</string>-->
+    <string name="enter_person_address_description">連絡先</string>
+    <!--cf. "pref_default_address" -->
+    <string name="thumbnail_setting_title">サムネイルの設定</string>
+    <string name="enter_thumbnail_description">ファイル名</string>
+    <string name="default_person_image_id">sample_0</string>
+    <string-array name="image_ld_array">
+        <item>sample_0</item>
+        <item>sample_1</item>
+        <item>sample_2</item>
+        <item>sample_3</item>
+        <item>sample_4</item>
+        <item>sample_5</item>
+        <item>sample_6</item>
+        <item>sample_7</item>
+    </string-array>
+    <!--<string name="change_thumbnail_msg">サムネイルを変更する</string>-->
+    <!--<string name="change_thumbnail_button">変更</string>-->
+    <!--<string name="delete_thumbnail_msg">サムネイルを削除する</string>-->
+    <!--<string name="delete_thumbnail_button">削除</string>-->
+    <string name="default_person_status">out</string>
     <!---->
-    <string name="other_setting_title">その他の設定</string>
-    <string name="delete_person_msg">このメンバーの削除</string>
-    <string name="delete_person_button">削除</string>
+    <!--<string name="other_setting_title">その他の設定</string>-->
+    <!--<string name="delete_person_msg">このメンバーの削除</string>-->
+    <!--<string name="delete_person_button">削除</string>-->
 
 </resources>

@@ -34,41 +34,48 @@
     <string name="pref_default_address">foo\@gmail.com</string>
 
     <!-- Settings Person-->
-    <string name="pref_header_members">Members</string>
+    <!--<string name="pref_header_members">Members</string>-->
+    <string name="person_setting_title">Person information setting</string>
+    <string name="enter_person_name_description">Name</string>
     <string name="default_person_name">Taro Yamada</string>
+    <string name="enter_person_detail_description">Self-introduction</string>
     <string name="default_person_detail">Ph.D. 1 year, Suzuki Lab, Team-Communication \n
         Born: Japan \n
         Hobby: Surfing \n
-        Special skill: Cooking \n
         Favorite food: Delicious rice
     </string>
-    <string name="default_person_image_id">sample_0</string>
+    <string name="calender_setting_title">Calender setting</string>
+    <string name="enter_calender_id_description">ID</string>
     <string name="default_person_calendar">xxx@group.calendar.google.com</string>
+    <!--<string name="create_new_calender_msg">New calendar creating</string>-->
+    <!--<string name="create_new_calender_button">Create</string>-->
+    <!--<string name="coordinate_calender_msg">Coordinate existing calender</string>-->
+    <!--<string name="coordinate_calender_button">Coordinate</string>-->
+    <!--<string name="release_calender_msg">Release calender</string>-->
+    <!--<string name="release_calender_button">Release</string>-->
+    <string name="enter_person_address_description">Contact address</string>
+    <!--cf. "pref_default_address" -->
+    <string name="thumbnail_setting_title">Thumbnail setting</string>
+    <string name="enter_thumbnail_description">Filename</string>
+    <string name="default_person_image_id">sample_0</string>
+    <string-array name="image_ld_array">
+        <item>sample_0</item>
+        <item>sample_1</item>
+        <item>sample_2</item>
+        <item>sample_3</item>
+        <item>sample_4</item>
+        <item>sample_5</item>
+        <item>sample_6</item>
+        <item>sample_7</item>
+    </string-array>
+    <!--<string name="change_thumbnail_msg">Change thumbnail</string>-->
+    <!--<string name="change_thumbnail_button">Change</string>-->
+    <!--<string name="delete_thumbnail_msg">Delete thumbnail</string>-->
+    <!--<string name="delete_thumbnail_button">Delete</string>-->
     <string name="default_person_status">out</string>
 
-    <string name="thumbnail_setting_title">Thumbnail setting</string>
-    <string name="change_thumbnail_msg">Change thumbnail</string>
-    <string name="change_thumbnail_button">Change</string>
-    <string name="delete_thumbnail_msg">Delete thumbnail</string>
-    <string name="delete_thumbnail_button">Delete</string>
     <!---->
-    <string name="person_setting_title">Person information setting</string>
-    <string name="enter_person_name_msg">Enter your name</string>
-    <string name="enter_person_name_button">Save</string>
-    <string name="enter_person_address_msg">Enter your contact address</string>
-    <string name="enter_person_address_button">Save</string>
-    <string name="enter_person_detail_msg">Enter your self-introduction</string>
-    <string name="enter_person_detail_button">Save</string>
-    <!---->
-    <string name="calender_setting_title">Calender setting</string>
-    <string name="create_new_calender_msg">New calendar creating</string>
-    <string name="create_new_calender_button">Create</string>
-    <string name="coordinate_calender_msg">Coordinate existing calender</string>
-    <string name="coordinate_calender_button">Coordinate</string>
-    <string name="release_calender_msg">Release calender</string>
-    <string name="release_calender_button">Release</string>
-    <!---->
-    <string name="other_setting_title">Other setting</string>
-    <string name="delete_person_msg">Delete this person</string>
-    <string name="delete_person_button">Delete</string>
+    <!--<string name="other_setting_title">Other setting</string>-->
+    <!--<string name="delete_person_msg">Delete this person</string>-->
+    <!--<string name="delete_person_button">Delete</string>-->
 </resources>

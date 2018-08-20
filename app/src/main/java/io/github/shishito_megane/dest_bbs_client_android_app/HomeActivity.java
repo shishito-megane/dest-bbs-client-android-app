@@ -118,18 +118,24 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    // メニューをActivity上に設置する
+    // Set Menu on the Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // 参照するリソースは上でリソースファイルに付けた名前と同じもの
-        getMenuInflater().inflate(R.menu.action_bar, menu);
+        getMenuInflater().inflate(R.menu.homeactivity_action_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    // メニューが選択されたときの処理
+    // process when menu is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item)  {
         switch (item.getItemId()) {
+            case R.id.menuPersonAdd:
+                Intent intent_person_add = new Intent(
+                        this,
+                        PersonAddActivity.class
+                );
+                startActivity(intent_person_add);
+                return true;
             case R.id.menuSetting:
                 // transition HomeActivity
                 Intent intent_setting = new Intent(
