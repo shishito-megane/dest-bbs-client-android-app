@@ -33,7 +33,7 @@
     <string name="pref_title_address">Default contact address</string>
     <string name="pref_default_address">foo\@gmail.com</string>
 
-    <!-- Settings Person-->
+    <!-- PersonAddActivity -->
     <!--<string name="pref_header_members">Members</string>-->
     <string name="person_setting_title">Person information setting</string>
     <string name="enter_person_name_description">Name</string>
@@ -73,9 +73,9 @@
     <!--<string name="delete_thumbnail_msg">Delete thumbnail</string>-->
     <!--<string name="delete_thumbnail_button">Delete</string>-->
     <string name="default_person_status">out</string>
-
     <!---->
     <!--<string name="other_setting_title">Other setting</string>-->
     <!--<string name="delete_person_msg">Delete this person</string>-->
     <!--<string name="delete_person_button">Delete</string>-->
+    <string name="complete_input">Input complete</string>
 </resources>

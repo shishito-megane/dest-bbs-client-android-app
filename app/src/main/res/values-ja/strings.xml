@@ -35,7 +35,7 @@
     <string name="pref_title_address">デフォルトの連絡先</string>
     <string name="pref_default_address">foo\@gmail.com</string>
 
-    <!-- Settings Person-->
+    <!-- PersonAddActivity -->
     <!--<string name="pref_header_members">メンバーの追加</string>-->
     <string name="person_setting_title">個人情報の設定</string>
     <string name="enter_person_name_description">名前</string>
@@ -79,5 +79,6 @@
     <!--<string name="other_setting_title">その他の設定</string>-->
     <!--<string name="delete_person_msg">このメンバーの削除</string>-->
     <!--<string name="delete_person_button">削除</string>-->
+    <string name="complete_input">入力完了</string>
 
 </resources>
