@@ -4,9 +4,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <!-- HomeActivity-->
-    <string name="lab_name">Laboratory</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
     <string name="notice_tap">Please tap the person you want.</string>
+    <string name="action_bar_person_add">Add member</string>
     <string name="action_bar_setting">Setting</string>
     <string name="action_bar_help">Help</string>
     <!-- PersonActivity -->

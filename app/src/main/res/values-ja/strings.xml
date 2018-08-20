@@ -8,6 +8,7 @@
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
+    <string name="action_bar_person_add">メンバーの追加</string>
     <string name="action_bar_setting">設定</string>
     <string name="action_bar_help">ヘルプ</string>
     <!-- PersonActivity -->
