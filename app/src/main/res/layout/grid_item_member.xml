@@ -22,6 +22,6 @@
         android:text="@string/default_person_name"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
 </RelativeLayout>
