@@ -20,15 +20,32 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".HomeActivity">
+        <!-- HomeActivity -->
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/home_activity_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- PersonActivity -->
         <activity
             android:name=".PersonActivity"
+            android:label="@string/person_activity_title"
+            android:parentActivityName=".HomeActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <!-- HelpActivity -->
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/help_activity_title"
             android:parentActivityName=".HomeActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -36,11 +53,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".CalenderSettingActivity" />
-        <activity android:name=".HelpActivity" />
+
+        <!-- SettingsActivity -->
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
+            android:label="@string/settings_activity_title"
             android:parentActivityName=".HomeActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -48,7 +65,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".PersonAddActivity"></activity>
+
+        <!-- PersonAddActivity-->
+        <activity
+            android:name=".PersonAddActivity"
+            android:label="@string/person_add_activity_title"
+            android:parentActivityName=".PersonActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PersonActivity" />
+        </activity>
+
+        <!--<activity android:name=".CalenderSettingActivity" />-->
     </application>
 
 </manifest>

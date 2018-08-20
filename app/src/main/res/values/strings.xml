@@ -4,12 +4,14 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <!-- HomeActivity-->
+    <string name="home_activity_title">Dest BBS</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
     <string name="notice_tap">Please tap the person you want.</string>
     <string name="action_bar_person_add">Add member</string>
     <string name="action_bar_setting">Setting</string>
     <string name="action_bar_help">Help</string>
     <!-- PersonActivity -->
+    <string name="person_activity_title">Dest BBS</string>
     <string name="person_image_view_detail">Member Image</string>
     <string name="call_person">Call</string>
     <string name="open_person_menu">It is me</string>
@@ -23,9 +25,11 @@
     <string name="update_enter_room_title">Update status</string>
     <string name="finish_update_status">I recorded.</string>
     <string name="cancled_update_status">I canceled recording.</string>
+    <!-- HelpActivity-->
+    <string name="help_activity_title">Help</string>
 
     <!-- SettingsActivity -->
-    <string name="title_activity_settings">Settings</string>
+    <string name="settings_activity_title">Settings</string>
     <!-- Settings General-->
     <string name="pref_header_general">General</string>
     <string name="pref_title_lab_name">Lab name</string>
@@ -34,7 +38,7 @@
     <string name="pref_default_address">foo\@gmail.com</string>
 
     <!-- PersonAddActivity -->
-    <!--<string name="pref_header_members">Members</string>-->
+    <string name="person_add_activity_title">Add member</string>
     <string name="person_setting_title">Person information setting</string>
     <string name="enter_person_name_description">Name</string>
     <string name="default_person_name">Taro Yamada</string>

@@ -5,6 +5,7 @@
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
     <!-- HomeActivity-->
+    <string name="home_activity_title">行先掲示板</string>
     <string name="lab_name">研究室</string>
     <string name="welcome_msg">ようこそ%1$sへ！</string>
     <string name="notice_tap">ご用の方をタップしてください</string>
@@ -12,6 +13,7 @@
     <string name="action_bar_setting">設定</string>
     <string name="action_bar_help">ヘルプ</string>
     <!-- PersonActivity -->
+    <string name="person_activity_title">行先掲示板</string>
     <string name="person_image_view_detail">メンバーの写真</string>
     <string name="call_person">この人を呼ぶ</string>
     <string name="open_person_menu">私です</string>
@@ -25,9 +27,11 @@
     <string name="update_enter_room_title">在室状況を更新</string>
     <string name="finish_update_status">記録しました．</string>
     <string name="cancled_update_status">記録をキャンセルしました．</string>
+    <!-- HelpActivity-->
+    <string name="help_activity_title">ヘルプ</string>
 
     <!-- SettingsActivity -->
-    <string name="title_activity_settings">設定</string>
+    <string name="settings_activity_title">設定</string>
     <!-- Settings General-->
     <string name="pref_header_general">一般</string>
     <string name="pref_title_lab_name">研究室・ゼミ・講座名</string>
@@ -36,7 +40,7 @@
     <string name="pref_default_address">foo\@gmail.com</string>
 
     <!-- PersonAddActivity -->
-    <!--<string name="pref_header_members">メンバーの追加</string>-->
+    <string name="person_add_activity_title">メンバーの追加</string>
     <string name="person_setting_title">個人情報の設定</string>
     <string name="enter_person_name_description">名前</string>
     <string name="default_person_name">山田 太郎</string>
