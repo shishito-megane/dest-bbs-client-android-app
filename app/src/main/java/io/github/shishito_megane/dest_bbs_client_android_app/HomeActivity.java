@@ -186,6 +186,7 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberIdList.add(memberID);
         }
+        cursor.close();
         mDbHelper.close();
 
         return memberIdList;
@@ -221,6 +222,7 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberNameList.add(memberName);
         }
+        cursor.close();
         mDbHelper.close();
         return memberNameList;
     }
@@ -253,6 +255,7 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberImageList.add(memberImageID);
         }
+        cursor.close();
         mDbHelper.close();
         return memberImageList;
     }
@@ -277,6 +280,7 @@ public class HomeActivity extends AppCompatActivity {
         long newRowId = db.insert("member", null, values);
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
 
+        db.close();
         mDbHelper.close();
     }
 }

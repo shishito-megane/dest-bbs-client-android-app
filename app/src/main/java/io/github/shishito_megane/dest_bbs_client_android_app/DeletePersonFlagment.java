@@ -99,6 +99,7 @@ public class DeletePersonFlagment extends DialogFragment {
 
         Log.d("DB", "メンバー削除 ID:"+String.valueOf(Id));
 
+        db.close();
         mDbHelper.close();
     }
 

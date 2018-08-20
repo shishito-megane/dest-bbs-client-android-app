@@ -154,6 +154,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberImageList.add(memberImageId);
         }
+        cursor.close();
         mDbHelper.close();
 
         return memberImageList.get(0);
@@ -191,6 +192,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberNameList.add(memberName);
         }
+        cursor.close();
         mDbHelper.close();
 
         return memberNameList.get(0);
@@ -228,6 +230,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberDetailList.add(memberDetail);
         }
+        cursor.close();
         mDbHelper.close();
 
         return memberDetailList.get(0);

@@ -90,6 +90,7 @@ public class PersonAddActivity extends AppCompatActivity {
         long newRowId = db.insert("member", null, values);
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
 
+        db.close();
         mDbHelper.close();
     }
 }
