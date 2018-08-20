@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Dest BBS</string>
+
     <!-- General -->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+
     <!-- HomeActivity-->
     <string name="home_activity_title">Dest BBS</string>
     <string name="welcome_msg">Welcome to our %1$s!</string>
@@ -10,21 +12,33 @@
     <string name="action_bar_person_add">Add member</string>
     <string name="action_bar_setting">Setting</string>
     <string name="action_bar_help">Help</string>
+
     <!-- PersonActivity -->
     <string name="person_activity_title">Dest BBS</string>
     <string name="person_image_view_detail">Member Image</string>
     <string name="call_person">Call</string>
     <string name="open_person_menu">It is me</string>
+    <!-- cf. "action_bar_help"-->
+    <string name="action_bar_person_delete">Delete this person</string>
+
     <!-- CallDialogFlagment-->
     <string name="call_dialog_title">Calling</string>
     <string name="call_dialog_msg">Do you call this person?</string>
     <string name="finish_calling_toast">I called.\nPlease wait for a while.</string>
     <string name="cancelled_calling_toast">I canceled calling.</string>
     <string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>
+
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">Update status</string>
     <string name="finish_update_status">I recorded.</string>
-    <string name="cancelled_update_status">I canceled recording.</string>
+    <string name="cancelled_update_status">I cancelled recording.</string>
+
+    <!-- DeletePersonFlagment -->
+    <string name="delete_person_dialog_title">Delete person</string>
+    <string name="delete_person_dialog_msg">Are you sure delete this person?</string>
+    <string name="finish_delete_person_toast">I delete this person.</string>
+    <string name="cancelled_delete_person_toast">I cancelled delete this person.</string>
+
     <!-- HelpActivity-->
     <string name="help_activity_title">Help</string>
 

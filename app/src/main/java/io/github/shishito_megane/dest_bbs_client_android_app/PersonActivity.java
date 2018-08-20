@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,7 +16,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+
+class Persons {
+
+    public static int personId;
+
+}
+
 public class PersonActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,29 +39,29 @@ public class PersonActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
 
-        Intent intent = getIntent();
-
         // get PERSON_ID
-        int personId = intent.getIntExtra(
+        Intent intent = getIntent();
+        Persons.personId = intent.getIntExtra(
                 HomeActivity.PERSON_ID,
                 0
         );
+        Log.d("DB", "選択: "+ String.valueOf(Persons.personId));
 
         // get PERSON_IMAGE_ID
-        final String personImageId = getPersonImageId(personId);
+        final String personImageId = getPersonImageId(Persons.personId);
         int imageIdInt = getResources().getIdentifier(personImageId, "drawable", getPackageName());
         // set person image
         ImageView imageViewPersonImage = findViewById(R.id.imageViewPerson);
         imageViewPersonImage.setImageResource(imageIdInt);
 
         // get person name
-        final String personName = getPersonName(personId);
+        final String personName = getPersonName(Persons.personId);
         // set person name (person id)
         TextView textViewPersonID = findViewById(R.id.textViewPersonName);
         textViewPersonID.setText(personName);
 
         // get PERSON_DETAIL
-        final String personDetail = getPersonDetail(personId);
+        final String personDetail = getPersonDetail(Persons.personId);
         // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
@@ -77,15 +87,47 @@ public class PersonActivity extends AppCompatActivity {
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
-
     }
+
+    // Set Menu on the Activity
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 参照するリソースは上でリソースファイルに付けた名前と同じもの
+        getMenuInflater().inflate(R.menu.personactivity_action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    // process when menu is selected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)  {
+        switch (item.getItemId()) {
+            case R.id.menuPersonDelete:
+                DeletePersonFlagment dialog = new DeletePersonFlagment();
+                Bundle args = new Bundle();
+                args.putInt("personId",Persons.personId);
+                dialog.setArguments(args);
+                dialog.show(getFragmentManager(), "delete_person");
+                return true;
+            case R.id.menuHelp:
+                Intent intent_help = new Intent(
+                        this,
+                        HelpActivity.class
+                );
+                startActivity(intent_help);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // DB
     public String getPersonImageId(
             int Id
     ) {
 
         List<String> memberImageList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -104,7 +146,7 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーの画像:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "該当メンバーの画像のレコード数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             String memberImageId = cursor.getString(
@@ -112,7 +154,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberImageList.add(memberImageId);
         }
-        cursor.close();
+        mDbHelper.close();
 
         return memberImageList.get(0);
     }
@@ -122,7 +164,7 @@ public class PersonActivity extends AppCompatActivity {
 
         List<String> memberNameList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -141,7 +183,7 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーの名前:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "該当メンバーの名前のレコード数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             String memberName = cursor.getString(
@@ -149,7 +191,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberNameList.add(memberName);
         }
-        cursor.close();
+        mDbHelper.close();
 
         return memberNameList.get(0);
     }
@@ -159,7 +201,7 @@ public class PersonActivity extends AppCompatActivity {
 
         List<String> memberDetailList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -178,7 +220,7 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーの詳細:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "該当メンバーの詳細レコード数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             String memberDetail = cursor.getString(
@@ -186,7 +228,7 @@ public class PersonActivity extends AppCompatActivity {
             );
             memberDetailList.add(memberDetail);
         }
-        cursor.close();
+        mDbHelper.close();
 
         return memberDetailList.get(0);
     }

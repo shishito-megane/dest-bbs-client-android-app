@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">行先掲示板</string>
+
     <!-- General -->
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
+
     <!-- HomeActivity-->
     <string name="home_activity_title">行先掲示板</string>
     <string name="lab_name">研究室</string>
@@ -12,21 +14,33 @@
     <string name="action_bar_person_add">メンバーの追加</string>
     <string name="action_bar_setting">設定</string>
     <string name="action_bar_help">ヘルプ</string>
+
     <!-- PersonActivity -->
     <string name="person_activity_title">行先掲示板</string>
     <string name="person_image_view_detail">メンバーの写真</string>
     <string name="call_person">この人を呼ぶ</string>
     <string name="open_person_menu">私です</string>
+    <!-- cf. "action_bar_help"-->
+    <string name="action_bar_person_delete">このメンバーを削除</string>
+
     <!-- CallDialogFlagment-->
     <string name="call_dialog_title">呼出</string>
     <string name="call_dialog_msg">この人を呼び出しますか？</string>
     <string name="finish_calling_toast">呼び出しました.\nしばらくお待ちください．</string>
     <string name="cancelled_calling_toast">呼び出しを中止しました．</string>
     <string name="absent_msg">只今席を外しております．\n急用の場合は次へご連絡ください．\n%1$s</string>
+
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">在室状況を更新</string>
     <string name="finish_update_status">記録しました．</string>
     <string name="cancelled_update_status">記録をキャンセルしました．</string>
+
+    <!-- DeletePersonFlagment -->
+    <string name="delete_person_dialog_title">メンバーの削除</string>
+    <string name="delete_person_dialog_msg">このメンバーを本当に削除しますか？</string>
+    <string name="finish_delete_person_toast">削除しました．</string>
+    <string name="cancelled_delete_person_toast">削除を中止しました．</string>
+
     <!-- HelpActivity-->
     <string name="help_activity_title">ヘルプ</string>
 
