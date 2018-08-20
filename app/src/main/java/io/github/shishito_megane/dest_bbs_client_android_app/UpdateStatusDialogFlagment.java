@@ -75,7 +75,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                 // display toast
                 Toast toast = Toast.makeText(
                         getActivity(),
-                        R.string.cancled_update_status,
+                        R.string.cancelled_update_status,
                         Toast.LENGTH_SHORT
                 );
                 toast.show();

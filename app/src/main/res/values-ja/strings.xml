@@ -26,7 +26,7 @@
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">在室状況を更新</string>
     <string name="finish_update_status">記録しました．</string>
-    <string name="cancled_update_status">記録をキャンセルしました．</string>
+    <string name="cancelled_update_status">記録をキャンセルしました．</string>
     <!-- HelpActivity-->
     <string name="help_activity_title">ヘルプ</string>
 

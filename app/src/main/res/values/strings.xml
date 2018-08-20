@@ -24,7 +24,7 @@
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">Update status</string>
     <string name="finish_update_status">I recorded.</string>
-    <string name="cancled_update_status">I canceled recording.</string>
+    <string name="cancelled_update_status">I canceled recording.</string>
     <!-- HelpActivity-->
     <string name="help_activity_title">Help</string>
 
