@@ -39,7 +39,7 @@ public class PersonAddActivity extends AppCompatActivity {
         Spinner spinner = (Spinner)findViewById(R.id.selectThumbnail);
         String personThumbnail = (String)spinner.getSelectedItem();
 
-        Log.v("Add Person", personName+personAddress+personDetail+personCalenderId+personThumbnail);
+        Log.v("DB", "追加: "+personName+personAddress+personDetail+personCalenderId+personThumbnail);
 
         saveData(
                 personName,
@@ -89,5 +89,7 @@ public class PersonAddActivity extends AppCompatActivity {
 
         long newRowId = db.insert("member", null, values);
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
+
+        mDbHelper.close();
     }
 }

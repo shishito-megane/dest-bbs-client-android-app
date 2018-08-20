@@ -144,7 +144,6 @@ public class HomeActivity extends AppCompatActivity {
                 );
                 startActivity(intent_setting);
                 return true;
-
             case R.id.menuHelp:
                 Intent intent_help = new Intent(
                         this,
@@ -163,7 +162,7 @@ public class HomeActivity extends AppCompatActivity {
 
         List<Integer> memberIdList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -179,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーIDリスト:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "メンバーIDの総数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             int memberID = cursor.getInt(
@@ -187,7 +186,7 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberIdList.add(memberID);
         }
-        cursor.close();
+        mDbHelper.close();
 
         return memberIdList;
     }
@@ -195,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
 
         List<String> memberNameList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -214,7 +213,7 @@ public class HomeActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーの名前:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "メンバーの名前の総数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             String memberName = cursor.getString(
@@ -222,14 +221,14 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberNameList.add(memberName);
         }
-        cursor.close();
+        mDbHelper.close();
         return memberNameList;
     }
     public List<String> getMemberImageList() {
 
         List<String> memberImageList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         // select column
         String[] projection = {
@@ -246,7 +245,7 @@ public class HomeActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "メンバーの画像:"+String.valueOf(cursor.getCount()));
+        Log.d("DB", "メンバーの画像の総数:"+String.valueOf(cursor.getCount()));
 
         while(cursor.moveToNext()) {
             String memberImageID = cursor.getString(
@@ -254,7 +253,7 @@ public class HomeActivity extends AppCompatActivity {
             );
             memberImageList.add(memberImageID);
         }
-        cursor.close();
+        mDbHelper.close();
         return memberImageList;
     }
     public void saveData(
@@ -277,6 +276,8 @@ public class HomeActivity extends AppCompatActivity {
 
         long newRowId = db.insert("member", null, values);
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
+
+        mDbHelper.close();
     }
 }
 
