@@ -9,7 +9,8 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="4dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/person_image_view_detail"/>
 
     <TextView
         android:id="@+id/member_textview"
@@ -18,7 +19,7 @@
         android:layout_below="@id/member_imageview"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:text="@string/member_name"
+        android:text="@string/default_person_name"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp" />
