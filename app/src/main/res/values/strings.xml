@@ -78,4 +78,5 @@
     <!--<string name="delete_person_msg">Delete this person</string>-->
     <!--<string name="delete_person_button">Delete</string>-->
     <string name="complete_input">Input complete</string>
+    <string name="finish_person_add_register">Finish register</string>
 </resources>
