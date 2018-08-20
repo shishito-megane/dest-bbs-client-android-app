@@ -4,7 +4,7 @@
 
     <header
         android:fragment="io.github.shishito_megane.dest_bbs_client_android_app.SettingsActivity$GeneralPreferenceFragment"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/pref_header_general" />
 
 </preference-headers>
