@@ -25,7 +25,7 @@
     <string name="call_dialog_title">Calling</string>
     <string name="call_dialog_msg">Do you call this person?</string>
     <string name="finish_calling_toast">I called.\nPlease wait for a while.</string>
-    <string name="cancelled_calling_toast">I canceled calling.</string>
+    <string name="cancelled_calling_toast">I cancelled calling.</string>
     <string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>
 
     <!-- UpdateStatusDialogFlagment-->
