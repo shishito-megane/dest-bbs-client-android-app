@@ -53,14 +53,13 @@ public class HomeActivity extends AppCompatActivity {
         final List<Integer> memberIdList = getMemberIdList();
         Log.d("DB", "長さ:"+String.valueOf(memberIdList.size()));
         if (memberIdList.size() == 0){
-            // TODO; デフォルト値とする
             saveData(
-                    getString(R.string.member_name),
-                    getString(R.string.member_detail),
-                "sample_0",
-                "012-345-6789",
-                "xxx",
-                "in"
+                    getString(R.string.default_person_name),
+                    getString(R.string.default_person_detail),
+                    getString(R.string.default_person_image_id),
+                    getString(R.string.pref_default_address),
+                    getString(R.string.default_person_calendar),
+                    getString(R.string.default_person_status)
             );
         }
 
