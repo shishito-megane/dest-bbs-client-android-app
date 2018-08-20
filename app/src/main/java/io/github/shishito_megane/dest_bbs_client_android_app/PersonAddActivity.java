@@ -1,6 +1,8 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,15 @@ public class PersonAddActivity extends AppCompatActivity {
 
         Log.v("Add Person", personName+personAddress+personDetail+personCalenderId+personThumbnail);
 
+        saveData(
+                personName,
+                personDetail,
+                personThumbnail,
+                personAddress,
+                personCalenderId,
+                getString(R.string.default_person_status)
+        );
+
         // display toast
         Toast toast = Toast.makeText(
                 this,
@@ -55,5 +66,28 @@ public class PersonAddActivity extends AppCompatActivity {
         startActivity(intent);
 
         return true;
+    }
+
+    // DB
+    public void saveData(
+            String name,
+            String detail,
+            String image,
+            String address,
+            String calender,
+            String status
+    ){
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("detail", detail);
+        values.put("image", image);
+        values.put("address", address);
+        values.put("calender", calender);
+        values.put("status", status);
+
+        long newRowId = db.insert("member", null, values);
+        Log.d("DB", "挿入"+name+String.valueOf(newRowId));
     }
 }
