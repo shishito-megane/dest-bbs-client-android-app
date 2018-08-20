@@ -12,8 +12,6 @@
     <string name="action_bar_help">ヘルプ</string>
     <!-- PersonActivity -->
     <string name="person_image_view_detail">メンバーの写真</string>
-    <string name="member_name">安倍 晋三</string>
-    <string name="member_detail">内閣総理大臣</string>
     <string name="call_person">この人を呼ぶ</string>
     <string name="open_person_menu">私です</string>
     <!-- CallDialogFlagment-->
@@ -35,8 +33,23 @@
     <string name="pref_default_lab_name">研究室</string>
     <string name="pref_title_address">デフォルトの連絡先</string>
     <string name="pref_default_address">foo\@gmail.com</string>
-    <!-- Settings Member-->
+
+    <!-- Settings Person-->
     <string name="pref_header_members">メンバーの設定</string>
+    <string name="default_person_name">山田 太郎</string>
+    <string name="default_person_detail">ヤマダ タロウ \n
+        大学院博士1年 鈴木研究室 通信班 \n
+        \n
+        東京都出身 \n
+        趣味: サーフィン \n
+        特技: 料理 \n
+        好きな食べ物: 美味しいお米! \n
+        \n
+        新米なので何事も勉強でがんばります
+    </string>
+    <string name="default_person_image_id">sample_0</string>
+    <string name="default_person_calendar">xxx@group.calendar.google.com</string>
+    <string name="default_person_status">out</string>
 
     <string name="thumbnail_setting_title">サムネイルの設定</string>
     <string name="change_thumbnail_msg">サムネイルを変更する</string>

@@ -11,8 +11,6 @@
     <string name="action_bar_help">Help</string>
     <!-- PersonActivity -->
     <string name="person_image_view_detail">Member Image</string>
-    <string name="member_name">Donald John Trump</string>
-    <string name="member_detail">President of the United States of America.</string>
     <string name="call_person">Call</string>
     <string name="open_person_menu">It is me</string>
     <!-- CallDialogFlagment-->
@@ -34,8 +32,19 @@
     <string name="pref_default_lab_name">Laboratory</string>
     <string name="pref_title_address">Default contact address</string>
     <string name="pref_default_address">foo\@gmail.com</string>
-    <!-- Settings Member-->
+
+    <!-- Settings Person-->
     <string name="pref_header_members">Members</string>
+    <string name="default_person_name">Taro Yamada</string>
+    <string name="default_person_detail">Ph.D. 1 year, Suzuki Lab, Team-Communication \n
+        Born: Japan \n
+        Hobby: Surfing \n
+        Special skill: Cooking \n
+        Favorite food: Delicious rice
+    </string>
+    <string name="default_person_image_id">sample_0</string>
+    <string name="default_person_calendar">xxx@group.calendar.google.com</string>
+    <string name="default_person_status">out</string>
 
     <string name="thumbnail_setting_title">Thumbnail setting</string>
     <string name="change_thumbnail_msg">Change thumbnail</string>
