@@ -25,7 +25,6 @@ class Persons {
 
 public class PersonActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +65,9 @@ public class PersonActivity extends AppCompatActivity {
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
 
+        // get PERSON_CALENDAR
+        final String personCalender = getPersonCalender(Persons.personId);
+
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
         dialogCall.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,9 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateStatusDialogFlagment dialog = new UpdateStatusDialogFlagment();
+                Bundle args = new Bundle();
+                args.putString("personCalender", personCalender);
+                dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
@@ -136,7 +141,7 @@ public class PersonActivity extends AppCompatActivity {
         };
         String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
         String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cursor = db.query(
+        Cursor cur = db.query(
                 DbContract.MemberTable.TABLE_NAME,
                 projection,
                 selection,
@@ -146,15 +151,25 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "該当メンバーの画像のレコード数:"+String.valueOf(cursor.getCount()));
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーの画像のレコード数:"+String.valueOf(contentValue));
 
-        while(cursor.moveToNext()) {
-            String memberImageId = cursor.getString(
-                    cursor.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_IMAGE)
+        while(cur.moveToNext()) {
+            String memberImageId = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_IMAGE)
             );
             memberImageList.add(memberImageId);
         }
-        cursor.close();
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
         mDbHelper.close();
 
         return memberImageList.get(0);
@@ -174,7 +189,7 @@ public class PersonActivity extends AppCompatActivity {
         };
         String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
         String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cursor = db.query(
+        Cursor cur = db.query(
                 DbContract.MemberTable.TABLE_NAME,
                 projection,
                 selection,
@@ -184,15 +199,24 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "該当メンバーの名前のレコード数:"+String.valueOf(cursor.getCount()));
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーの名前のレコード数:"+String.valueOf(contentValue));
 
-        while(cursor.moveToNext()) {
-            String memberName = cursor.getString(
-                    cursor.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_NAME)
+        while(cur.moveToNext()) {
+            String memberName = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_NAME)
             );
             memberNameList.add(memberName);
         }
-        cursor.close();
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
         mDbHelper.close();
 
         return memberNameList.get(0);
@@ -212,7 +236,7 @@ public class PersonActivity extends AppCompatActivity {
         };
         String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
         String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cursor = db.query(
+        Cursor cur = db.query(
                 DbContract.MemberTable.TABLE_NAME,
                 projection,
                 selection,
@@ -222,17 +246,75 @@ public class PersonActivity extends AppCompatActivity {
                 null
         );
 
-        Log.d("DB", "該当メンバーの詳細レコード数:"+String.valueOf(cursor.getCount()));
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーの詳細のレコード数:"+String.valueOf(contentValue));
 
-        while(cursor.moveToNext()) {
-            String memberDetail = cursor.getString(
-                    cursor.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_DETAIL)
+        while(cur.moveToNext()) {
+            String memberDetail = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_DETAIL)
             );
             memberDetailList.add(memberDetail);
         }
-        cursor.close();
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
         mDbHelper.close();
 
         return memberDetailList.get(0);
+    }
+    public String getPersonCalender(
+            int Id
+    ) {
+
+        List<String> memberCalenderList = new ArrayList<>();
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // select column
+        String[] projection = {
+                DbContract.MemberTable.ID,
+                DbContract.MemberTable.COLUMN_CALENDAR,
+        };
+        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
+        String[] selectionArgs = { String.valueOf(Id) };
+        Cursor cur = db.query(
+                DbContract.MemberTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
+
+        while(cur.moveToNext()) {
+            String memberCalender = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_CALENDAR)
+            );
+            memberCalenderList.add(memberCalender);
+        }
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
+        mDbHelper.close();
+
+        return memberCalenderList.get(0);
     }
 }
