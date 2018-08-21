@@ -303,6 +303,7 @@ public class HomeActivity extends AppCompatActivity {
         mDbHelper.close();
     }
 
+    // calender
     private void preCheckCalender() {
 
         // No Internet connection
@@ -316,7 +317,7 @@ public class HomeActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            new TestTask().execute();
+            new CalendetTestTask().execute();
         }
     }
 
@@ -333,9 +334,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * 非同期で　Google Calendar API の呼び出しを行うクラス。
+     * 非同期で　Google Calendar のテストを行うタスク。
      */
-        private class TestTask extends AsyncTask<Integer, Integer, Integer> {
+    private class CalendetTestTask extends AsyncTask<Integer, Integer, Integer> {
 
         private Exception mLastError = null;
 
@@ -372,8 +373,9 @@ public class HomeActivity extends AppCompatActivity {
         // 非同期処理
         @Override
         protected Integer doInBackground(Integer... params) {
-            int cal = getCalenderList();
-            return  cal;
+
+            int calContentValue = getCalenderList();
+            return calContentValue;
         }
 
         private int getCalenderList()  {
@@ -390,8 +392,8 @@ public class HomeActivity extends AppCompatActivity {
             final Cursor cur = cr.query(uri, projection, selection, selectionArgs, sortOrder);
 
             // カレンダーの総数取得
-            int calTotal = cur.getCount();
-            Log.d("カレンダー", "総数: "+String.valueOf(calTotal));
+            int calContentValue = cur.getCount();
+            Log.d("カレンダー", "総数: "+String.valueOf(calContentValue));
 
             // ログ出力 (Header)
             final StringBuilder sbHeader = new StringBuilder();
@@ -431,8 +433,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             cur.close();
-
-            return calTotal;
+            return calContentValue;
         }
 
         @Override
@@ -441,25 +442,35 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Integer intel) {
+        protected void onPostExecute(Integer cal) {
 
             if (mProgress != null && mProgress.isShowing()) {
-                mProgress.dismiss();
+                mProgress.hide();
             }
-            // display toast
-            Toast toast = Toast.makeText(
-                    getApplicationContext(),
-                    getString(R.string.finish_get_calender_toast),
-                    Toast.LENGTH_SHORT
-            );
-            toast.show();
+            // check calender list
+            else if (cal < 1){
+                // display toast
+                Toast toast = Toast.makeText(
+                        getApplicationContext(),
+                        getString(R.string.err_get_calender_toast),
+                        Toast.LENGTH_SHORT
+                );
+                toast.show();
+            }
+            else {
+                // display toast
+                Toast toast = Toast.makeText(
+                        getApplicationContext(),
+                        getString(R.string.finish_get_calender_toast),
+                        Toast.LENGTH_SHORT
+                );
+                toast.show();
+            }
         }
 
         @Override
         protected void onCancelled() {
-//            mProgress.hide();
-
-
+            mProgress.hide();
             // display toast
             Toast toast = Toast.makeText(
                     getApplicationContext(),
@@ -467,9 +478,7 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT
             );
             toast.show();
-
         }
-
     }
 }
 
