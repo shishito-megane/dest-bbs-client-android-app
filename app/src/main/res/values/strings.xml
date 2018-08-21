@@ -28,14 +28,36 @@
     <!-- CallDialogFlagment-->
     <string name="call_dialog_title">Calling</string>
     <string name="call_dialog_msg">Do you call this person?</string>
-    <string name="finish_calling_toast">I called.\nPlease wait for a while.</string>
+    <!--<string name="finish_calling_toast">I called.\nPlease wait for a while.</string>-->
+    <string name="finish_calling_toast">this function implementation during.\nPlease call directly.</string>
     <string name="cancelled_calling_toast">I cancelled calling.</string>
-    <string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>
+    <!--<string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>-->
 
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_enter_room_title">Update status</string>
+    <string name="registering_status">Registering...</string>
     <string name="finish_update_status">I recorded.</string>
     <string name="cancelled_update_status">I cancelled recording.</string>
+    <string-array name="status_entering_room_array">
+        <item>Record entering room</item>
+        <item>Go to class</item>
+        <item>Go to Meeting</item>
+        <item>Temporary Outing</item>
+        <item>Return Home</item>
+    </string-array>
+    <string-array name="status_entering_room_value">
+        <item>入室</item>
+        <item>講義</item>
+        <item>会議</item>
+        <item>外出</item>
+        <item>帰宅</item>
+    </string-array>
+    <!--<string-array name="status_leaving_room_array">-->
+        <!--<item>Go to class</item>-->
+        <!--<item>Go to Meeting</item>-->
+        <!--<item>Temporary Outing</item>-->
+        <!--<item>Return Home</item>-->
+    <!--</string-array>-->
 
     <!-- DeletePersonFlagment -->
     <string name="delete_person_dialog_title">Delete person</string>
