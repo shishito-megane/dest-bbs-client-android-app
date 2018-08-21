@@ -14,6 +14,10 @@
     <string name="action_bar_person_add">メンバーの追加</string>
     <string name="action_bar_setting">設定</string>
     <string name="action_bar_help">ヘルプ</string>
+    <string name="get_calender_toast">カレンダー情報を取得しています．</string>
+    <string name="finish_get_calender_toast">カレンダー情報を取得しました．</string>
+    <string name="cancelled_get_calender_toast">カレンダー情報の取得をキャンセルしました．</string>
+    <string name="err_get_calender_toast">カレンダー情報の取得エラー</string>
 
     <!-- PersonActivity -->
     <string name="person_activity_title">行先掲示板</string>
