@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class Persons {
+class PersonInfo {
 
     public static int personId;
 
@@ -40,33 +40,33 @@ public class PersonActivity extends AppCompatActivity {
 
         // get PERSON_ID
         Intent intent = getIntent();
-        Persons.personId = intent.getIntExtra(
+        PersonInfo.personId = intent.getIntExtra(
                 HomeActivity.PERSON_ID,
                 0
         );
-        Log.d("DB", "選択: "+ String.valueOf(Persons.personId));
+        Log.d("DB", "選択: "+ String.valueOf(PersonInfo.personId));
 
         // get PERSON_IMAGE_ID
-        final String personImageId = getPersonImageId(Persons.personId);
+        final String personImageId = getPersonImageId(PersonInfo.personId);
         int imageIdInt = getResources().getIdentifier(personImageId, "drawable", getPackageName());
         // set person image
         ImageView imageViewPersonImage = findViewById(R.id.imageViewPerson);
         imageViewPersonImage.setImageResource(imageIdInt);
 
         // get person name
-        final String personName = getPersonName(Persons.personId);
+        final String personName = getPersonName(PersonInfo.personId);
         // set person name (person id)
         TextView textViewPersonID = findViewById(R.id.textViewPersonName);
         textViewPersonID.setText(personName);
 
         // get PERSON_DETAIL
-        final String personDetail = getPersonDetail(Persons.personId);
+        final String personDetail = getPersonDetail(PersonInfo.personId);
         // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
 
         // get PERSON_CALENDAR
-        final String personCalender = getPersonCalender(Persons.personId);
+        final String personCalender = getPersonCalender(PersonInfo.personId);
 
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
@@ -108,7 +108,7 @@ public class PersonActivity extends AppCompatActivity {
             case R.id.menuPersonDelete:
                 DeletePersonFlagment dialog = new DeletePersonFlagment();
                 Bundle args = new Bundle();
-                args.putInt("personId",Persons.personId);
+                args.putInt("personId", PersonInfo.personId);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "delete_person");
                 return true;
