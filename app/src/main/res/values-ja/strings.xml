@@ -21,7 +21,7 @@
     <!-- PersonActivity -->
     <string name="person_activity_title">行先掲示板</string>
     <string name="person_image_view_detail">メンバーの写真</string>
-    <string name="call_person">この人を呼ぶ</string>
+    <string name="call_person">呼び出す</string>
     <string name="open_person_menu">私です</string>
     <!-- cf. "action_bar_help"-->
     <string name="action_bar_person_delete">このメンバーを削除</string>
