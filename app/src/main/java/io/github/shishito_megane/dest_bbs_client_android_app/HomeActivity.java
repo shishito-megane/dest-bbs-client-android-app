@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
 
-    ProgressDialog mProgress;
+//    ProgressDialog mProgress;
 
 
     @Override
@@ -130,9 +130,9 @@ public class HomeActivity extends AppCompatActivity {
 
         gridview.setOnItemClickListener(mMessageClickedHandler);
 
-        // set progress bar (calender get test )
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage(getString(R.string.get_calender_toast));
+//        // set progress bar (calender get test )
+//        mProgress = new ProgressDialog(this);
+//        mProgress.setMessage(getString(R.string.get_calender_toast));
 
         // test calender
         preCheckCalender();
@@ -440,15 +440,15 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgress.show();
+//            mProgress.show();
         }
 
         @Override
         protected void onPostExecute(Integer cal) {
 
-            if (mProgress != null && mProgress.isShowing()) {
-                mProgress.hide();
-            }
+//            if (mProgress != null && mProgress.isShowing()) {
+//                mProgress.hide();
+//            }
 
             // check calender list
             if (cal < 1){
@@ -473,7 +473,7 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+//            mProgress.hide();
             // display toast
             Toast toast = Toast.makeText(
                     getApplicationContext(),
