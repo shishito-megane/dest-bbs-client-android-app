@@ -159,19 +159,16 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
             );
             Log.d("カレンダー","ローカルcalenderId: "+String.valueOf(calenderId));
 
-            // get now time
-            final long now = new Date().getTime();
-
-            // set end time (1 min)
-            final long anHourLater = now;
+            final long startTime = new Date().getTime() + 2 * 60 * 1000;
+            final long endTime = startTime;
 
             Long eventId = this.addEvent(
                     calenderId,
                     this.statusCode,
-                    "イベントの説明",
+                    "",
                     eventColorKey,
-                    now,
-                    anHourLater
+                    startTime,
+                    endTime
             );
             return eventId;
         }
