@@ -458,7 +458,9 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
         @Override
         protected void onPostExecute(String output) {
-            mProgress.hide();
+            if (mProgress != null && mProgress.isShowing()) {
+                mProgress.dismiss();
+            }
             if (output == null || output.isEmpty()) {
                 textViewCalenderIdResult.setText(getString(R.string.err_create_calender_msg));
             } else {
@@ -469,7 +471,9 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+            if (mProgress != null && mProgress.isShowing()) {
+                mProgress.dismiss();
+            }
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
