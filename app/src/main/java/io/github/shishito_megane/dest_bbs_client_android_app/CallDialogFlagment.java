@@ -36,11 +36,13 @@ public class CallDialogFlagment extends DialogFragment {
                 );
                 toast.show();
 
-                // transition HomeActivity
+                // Return HomeActivity and finish this activity
                 Intent intent = new Intent(
                         getActivity(),
+
                         HomeActivity.class
                 );
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -61,11 +63,12 @@ public class CallDialogFlagment extends DialogFragment {
                 );
                 toast.show();
 
-                // transition HomeActivity
+                // Return HomeActivity and finish this activity
                 Intent intent = new Intent(
                         getActivity(),
                         HomeActivity.class
                 );
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });

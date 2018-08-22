@@ -136,11 +136,12 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         );
         toast.show();
 
-        // transition HomeActivity
+        // Return HomeActivity and finish this activity
         Intent intent = new Intent(
                this,
                 HomeActivity.class
         );
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
         return true;

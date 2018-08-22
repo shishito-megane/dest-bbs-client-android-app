@@ -31,7 +31,6 @@ public class DeletePersonFlagment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // todo;
                         deletePerson(personId);
 
                         // display toast
@@ -42,11 +41,12 @@ public class DeletePersonFlagment extends DialogFragment {
                         );
                         toast.show();
 
-                        // transition HomeActivity
+                        // Return HomeActivity and finish this activity
                         Intent intent = new Intent(
                                 getActivity(),
                                 HomeActivity.class
                         );
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
                 });
@@ -67,11 +67,12 @@ public class DeletePersonFlagment extends DialogFragment {
                         );
                         toast.show();
 
-                        // transition HomeActivity
+                        // Return HomeActivity and finish this activity
                         Intent intent = new Intent(
                                 getActivity(),
                                 HomeActivity.class
                         );
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
                 });
