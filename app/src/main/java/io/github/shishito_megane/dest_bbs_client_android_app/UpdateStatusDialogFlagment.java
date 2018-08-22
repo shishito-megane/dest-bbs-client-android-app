@@ -26,7 +26,6 @@ import java.util.TimeZone;
 
 public class UpdateStatusDialogFlagment extends DialogFragment {
 
-    ProgressDialog mProgress;
     StatusRegistrationTask register;
 
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -73,21 +72,12 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                 array.recycle();
 
                 // add recording function
-                // set progress bar (calender get test )
-                mProgress = new ProgressDialog(getActivity());
-                mProgress.setMessage(getString(R.string.registering_status));
-
                 // register = new StatusRegistrationTask(calenderId);
-                register = new StatusRegistrationTask(calenderId, statusCode);
-                register.execute();
-
-                // display toast
-                Toast toast = Toast.makeText(
-                        getActivity(),
-                        R.string.finish_update_status,
-                        Toast.LENGTH_SHORT
+                register = new StatusRegistrationTask(
+                        calenderId,
+                        statusCode
                 );
-                toast.show();
+                register.execute();
 
                 // Return HomeActivity and finish this activity
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
@@ -113,8 +103,6 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
             }
         });
 
-        builder.show();
-
         return builder.create();
     }
 
@@ -130,13 +118,14 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         /**
          * コンストラクタ
          */
-        private StatusRegistrationTask(String calenderOwnerId, String statusCode) {
+        private StatusRegistrationTask(
+                String calenderOwnerId,
+                String statusCode
+        ) {
             super();
             this.calenderOwnerId   = calenderOwnerId;
             this.statusCode = statusCode;
         }
-
-        private Exception mLastError = null;
 
         // プロジェクション配列。
         // 取得したいプロパティの一覧を指定する。
@@ -157,23 +146,12 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         // プロジェクション配列のインデックス。
         // パフォーマンス向上のために、動的に取得せずに、静的に定義しておく。
         private static final int CALENDAR_PROJECTION_IDX_ID = 0;
-//        private static final int CALENDAR_PROJECTION_IDX_NAME = 1;
-//        private static final int CALENDAR_PROJECTION_IDX_ACCOUNT_NAME = 2;
-//        private static final int CALENDAR_PROJECTION_IDX_ACCOUNT_TYPE = 3;
-//        private static final int CALENDAR_PROJECTION_IDX_CALENDAR_COLOR = 4;
-//        private static final int CALENDAR_PROJECTION_IDX_CALENDAR_DISPLAY_NAME = 5;
-//        private static final int CALENDAR_PROJECTION_IDX_CALENDAR_ACCESS_LEVEL = 6;
-//        private static final int CALENDAR_PROJECTION_IDX_CALENDAR_TIME_ZONE = 7;
-//        private static final int CALENDAR_PROJECTION_IDX_VISIBLE = 8;
-//        private static final int CALENDAR_PROJECTION_IDX_SYNC_EVENTS = 9;
-//        private static final int CALENDAR_PROJECTION_IDX_OWNER_ACCOUNT = 10;
 
         // 非同期処理
         @Override
         protected Long doInBackground(Long... calenderOwnerIds) {
 
             final String eventColorKey = "4";
-//            final long calenderOwnerId = calenderOwnerId;
 
             // get calenderId from calenderOwnerId
             final long calenderId = this.getCalenderId(
@@ -262,39 +240,32 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
         @Override
         protected void onPreExecute() {
-            mProgress.show();
         }
 
         @Override
         protected void onPostExecute(Long eventId) {
 
-            if (mProgress != null && mProgress.isShowing()) {
-                mProgress.hide();
-            }
-            else {
-                // display toast
-                Toast toast = Toast.makeText(
-                        getActivity(),
-                        getString(R.string.finish_get_calender_toast),
-                        Toast.LENGTH_SHORT
-                );
-                toast.show();
-            }
+            // TODO: 処理結果をなんとかして通知したい
+//            // display toast
+//            Toast toast = Toast.makeText(
+//                    getActivity(),
+//                    getString(R.string.finish_update_status),
+//                    Toast.LENGTH_SHORT
+//            );
+//            toast.show();
         }
 
         @Override
         protected void onCancelled() {
-//            mProgress.hide();
 
-
-            // display toast
-            Toast toast = Toast.makeText(
-                    getActivity(),
-                    getString(R.string.cancelled_get_calender_toast),
-                    Toast.LENGTH_SHORT
-            );
-            toast.show();
-
+            // TODO: 処理結果をなんとかして通知したい
+//            // display toast
+//            Toast toast = Toast.makeText(
+//                    getActivity(),
+//                    getString(R.string.cancelled_update_status),
+//                    Toast.LENGTH_SHORT
+//            );
+//            toast.show();
         }
     }
 }
