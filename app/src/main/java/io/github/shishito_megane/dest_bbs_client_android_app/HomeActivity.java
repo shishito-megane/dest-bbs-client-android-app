@@ -447,8 +447,9 @@ public class HomeActivity extends AppCompatActivity {
             if (mProgress != null && mProgress.isShowing()) {
                 mProgress.hide();
             }
+
             // check calender list
-            else if (cal < 1){
+            if (cal < 1){
                 // display toast
                 Toast toast = Toast.makeText(
                         getApplicationContext(),
