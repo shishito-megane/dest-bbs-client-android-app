@@ -28,6 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,6 +70,15 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_add);
+
+        // set default lab address
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String default_person_address = getString(R.string.pref_default_address);
+        String address = prefs.getString("lab_address", default_person_address);
+
+        // set default lab address
+        final EditText editTextPersonAddress = findViewById(R.id.editTextPersonAddress);
+        editTextPersonAddress.setText(address);
 
         final Button buttonCreateNewCalender = (Button)findViewById(R.id.buttonCreateNewCalender);
         editTextCalenderId = (EditText)findViewById(R.id.editTextCalenderId);
