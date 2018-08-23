@@ -73,13 +73,14 @@
         <!-- PersonAddActivity-->
         <activity
             android:name=".PersonAddActivity"
-            android:label="@string/person_add_activity_title"
-            android:parentActivityName=".PersonActivity">
+            android:label="@string/person_add_activity_title" >
+            <!-- XXX: 親ActivityはPersonActivityだが，登録未完了時の誤登録を防ぐため設定しない -->
+            <!--android:parentActivityName=".PersonActivity"-->
 
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PersonActivity" />
+            <!--&lt;!&ndash; The meta-data tag is required if you support API level 15 and lower &ndash;&gt;-->
+            <!--<meta-data-->
+                <!--android:name="android.support.PARENT_ACTIVITY"-->
+                <!--android:value=".PersonActivity" />-->
         </activity>
 
     </application>
