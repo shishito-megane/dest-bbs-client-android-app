@@ -17,6 +17,7 @@
     <string name="finish_get_calender_toast">カレンダー情報を取得しました．</string>
     <string name="cancelled_get_calender_toast">カレンダー情報の取得をキャンセルしました．</string>
     <string name="err_get_calender_toast">カレンダー情報の取得エラー</string>
+    <string name="get_status_checking_msg">確認中…</string>
 
     <!-- PersonActivity -->
     <string name="person_activity_title">行先掲示板</string>
@@ -35,18 +36,21 @@
     <!--<string name="absent_msg">只今席を外しております．\n急用の場合は次へご連絡ください．\n%1$s</string>-->
 
     <!-- UpdateStatusDialogFlagment-->
-    <string name="update_enter_room_title">在室状況を更新</string>
+    <string name="update_entering_room_title">在室状況を更新</string>
+    <string name="update_leaving_room_title">どちらへ行かれますか？</string>
     <string name="registering_status">記録中...</string>
     <string name="finish_update_status">記録しました．</string>
     <string name="cancelled_update_status">記録をキャンセルしました．</string>
-    <string-array name="status_list_array">
+    <string-array name="status_entering_room_list">
         <item>入室を記録</item>
+    </string-array>
+    <string-array name="status_leaving_room_list">
         <item>講義に行く</item>
         <item>会議に行く</item>
         <item>ちょっと外出</item>
         <item>帰宅する</item>
     </string-array>
-    <string-array name="status_title_array">
+    <string-array name="status_code_array">
         <item>入室</item>
         <item>講義</item>
         <item>会議</item>

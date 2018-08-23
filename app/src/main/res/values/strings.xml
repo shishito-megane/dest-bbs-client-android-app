@@ -16,6 +16,7 @@
     <string name="finish_get_calender_toast">Finish getting calendar information.</string>
     <string name="cancelled_get_calender_toast">Cancelled getting calendar information.</string>
     <string name="err_get_calender_toast">Err getting calendar information.</string>
+    <string name="get_status_checking_msg">Checking…</string>
 
     <!-- PersonActivity -->
     <string name="person_activity_title">Dest BBS</string>
@@ -34,18 +35,21 @@
     <!--<string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>-->
 
     <!-- UpdateStatusDialogFlagment-->
-    <string name="update_enter_room_title">Update status</string>
+    <string name="update_entering_room_title">Update status</string>
+    <string name="update_leaving_room_title">Where are you going?</string>
     <string name="registering_status">Registering...</string>
     <string name="finish_update_status">I recorded.</string>
     <string name="cancelled_update_status">I cancelled recording.</string>
-    <string-array name="status_list_array">
+    <string-array name="status_entering_room_list">
         <item>Record entering room</item>
+    </string-array>
+    <string-array name="status_leaving_room_list">
         <item>Go to class</item>
         <item>Go to Meeting</item>
         <item>Temporary Outing</item>
         <item>Return Home</item>
     </string-array>
-    <string-array name="status_title_array">
+    <string-array name="status_code_array">
         <item>入室</item>
         <item>講義</item>
         <item>会議</item>

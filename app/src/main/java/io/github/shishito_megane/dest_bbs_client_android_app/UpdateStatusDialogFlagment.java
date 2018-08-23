@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,11 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
     StatusRegistrationTask register;
 
+    int personId;
+    String calenderId;
+    String oldStatusCode;
+    String newStatusCode;
+
     public Dialog onCreateDialog(Bundle savedInstanceState){
 
         int defaultItem = 0;
@@ -35,23 +41,50 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         checkedItems.add(defaultItem);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.update_enter_room_title);
 
-        // get ags (personCalenderID, from DB)
-        final String calenderId = getArguments().getString("personCalender");
+        // get ags
+        personId = getArguments().getInt("personId");
 
-        builder.setSingleChoiceItems(
-                R.array.status_list_array,
-                defaultItem,
-                new DialogInterface.OnClickListener() {
+        // get calenderId, statusCode
+        calenderId = getPersonCalender(personId);
+        oldStatusCode = getPersonStatus(personId);
 
-            public void onClick(DialogInterface dialog, int which) {
-                checkedItems.clear();
-                checkedItems.add(which);
-                // The 'which' argument contains the index position
-                // of the selected item
-            }
-        });
+
+        // 更新前の在室状況が入室なら
+        if (oldStatusCode.equals("入室")){
+
+            builder.setTitle(R.string.update_leaving_room_title);
+
+            builder.setSingleChoiceItems(
+                    R.array.status_leaving_room_list,
+                    defaultItem,
+                    new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            checkedItems.clear();
+                            checkedItems.add(which);
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                        }
+                    });
+        }
+        else {
+
+            builder.setTitle(R.string.update_entering_room_title);
+
+            builder.setSingleChoiceItems(
+                    R.array.status_entering_room_list,
+                    defaultItem,
+                    new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            checkedItems.clear();
+                            checkedItems.add(which);
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                        }
+                    });
+        }
 
         builder.setPositiveButton(
                 R.string.ok,
@@ -63,29 +96,44 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                 // nothing checked err
                 if (!checkedItems.isEmpty()) {
                     Log.d("checkedItem:", "" + checkedItems.get(0));
+
+                    // get checked item
+                    int checkedItemInt = checkedItems.get(0);
+
+                    Resources res = getResources();
+                    TypedArray array = res.obtainTypedArray(R.array.status_code_array);
+
+                    // get new status code
+                    if (oldStatusCode.equals("入室")){
+                        // XXX: 入退室で項目の数が違う分，ずらす
+                        newStatusCode = array.getString(checkedItemInt + 1);
+                    }
+                    else {
+                        newStatusCode = array.getString(checkedItemInt);
+                    }
+
+                    array.recycle();
+
+                    // add recording function
+                    // DB
+                    updatePersonStatus(personId, newStatusCode);
+
+                    // calender
+                    register = new StatusRegistrationTask(
+                            calenderId,
+                            newStatusCode,
+                            getActivity()
+                    );
+                    register.execute();
+
+                    // Return HomeActivity(new created) and finish this activity
+                    Intent intent = new Intent(getActivity(),HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
-
-                // get checked item
-                int statusCode = checkedItems.get(0);
-                Resources res = getResources();
-                TypedArray array = res.obtainTypedArray(R.array.status_title_array);
-                String statusTitle =  array.getString(statusCode);
-                array.recycle();
-
-                // add recording function
-                // register = new StatusRegistrationTask(calenderId);
-                register = new StatusRegistrationTask(
-                        calenderId,
-                        statusCode,
-                        statusTitle,
-                        getActivity()
-                );
-                register.execute();
-
-                // Return HomeActivity and finish this activity
-                Intent intent = new Intent(getActivity(),HomeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                else {
+                    Log.w("checkedItem:", "なし");
+                }
             }
         });
 
@@ -109,6 +157,128 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         return builder.create();
     }
 
+    // DB
+    public String getPersonCalender(
+            int Id
+    ) {
+
+        List<String> memberCalenderList = new ArrayList<>();
+        DbHelper mDbHelper = new DbHelper(getActivity());
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // select column
+        String[] projection = {
+                DbContract.MemberTable.ID,
+                DbContract.MemberTable.COLUMN_CALENDAR,
+        };
+        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
+        String[] selectionArgs = { String.valueOf(Id) };
+        Cursor cur = db.query(
+                DbContract.MemberTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
+
+        while(cur.moveToNext()) {
+            String memberCalender = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_CALENDAR)
+            );
+            memberCalenderList.add(memberCalender);
+        }
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
+        mDbHelper.close();
+
+        return memberCalenderList.get(0);
+    }
+    public String getPersonStatus(
+            int Id
+    ) {
+
+        List<String> memberStatusList = new ArrayList<>();
+        DbHelper mDbHelper = new DbHelper(getActivity());
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // select column
+        String[] projection = {
+                DbContract.MemberTable.ID,
+                DbContract.MemberTable.COLUMN_STATUS,
+        };
+        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
+        String[] selectionArgs = { String.valueOf(Id) };
+        Cursor cur = db.query(
+                DbContract.MemberTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get total records value
+        int contentValue = cur.getCount();
+        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
+
+        while(cur.moveToNext()) {
+            String memberCalender = cur.getString(
+                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_STATUS)
+            );
+            memberStatusList.add(memberCalender);
+        }
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+            Log.d("DB", memberStatusList.get(0) );
+        } else {
+            Log.w("DB", "総数が1ではない" );
+        }
+
+        cur.close();
+        mDbHelper.close();
+
+        return memberStatusList.get(0);
+    }
+    public void updatePersonStatus(
+            int Id,
+            String statusCode
+    ) {
+
+        DbHelper mDbHelper = new DbHelper(getActivity());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.MemberTable.COLUMN_STATUS, statusCode);
+        String selection = DbContract.MemberTable.ID + " = ?";  // WHERE 句
+        String[] selectionArgs = { String.valueOf(Id) };
+
+        db.update(
+                DbContract.MemberTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        db.close();
+        mDbHelper.close();
+    }
+
     // Calender
     /**
      * 非同期で　Google Calendar に在室状況を登録するクラス
@@ -116,23 +286,21 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
     private class StatusRegistrationTask extends AsyncTask<Long, Integer, Long> {
 
         String calenderOwnerId;
-        int statusCode;
-        String statusTitle;
+        String statusCode;
         Context context;
+        String eventColorKey;
 
         /**
          * コンストラクタ
          */
         private StatusRegistrationTask(
                 String calenderOwnerId,
-                int statusCode,
-                String statusTitle,
+                String statusCode,
                 Context context
         ) {
             super();
             this.calenderOwnerId   = calenderOwnerId;
             this.statusCode = statusCode;
-            this.statusTitle = statusTitle;
             this.context = context;
         }
 
@@ -160,8 +328,14 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         @Override
         protected Long doInBackground(Long... calenderOwnerIds) {
 
-            // set color key (depend statusCode. 0 is not exist, so +1 set)
-            final String eventColorKey = String.valueOf(this.statusCode + 1);
+            // set color key
+            if (this.statusCode.equals("入室")){
+                eventColorKey = "7";    // Peacock(水色)
+            }
+            else {
+                eventColorKey = "6";    // Tangerine(オレンジ色)
+            }
+
 
             // get calenderId from calenderOwnerId
             final long calenderId = this.getCalenderId(
@@ -174,7 +348,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
             Long eventId = this.addEvent(
                     calenderId,
-                    this.statusTitle,
+                    this.statusCode,
                     "",
                     eventColorKey,
                     startTime,
