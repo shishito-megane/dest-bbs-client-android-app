@@ -174,8 +174,8 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
             Long eventId = this.addEvent(
                     calenderId,
+                    this.statusTitle,
                     "",
-                    getString(R.string.app_name),
                     eventColorKey,
                     startTime,
                     endTime
