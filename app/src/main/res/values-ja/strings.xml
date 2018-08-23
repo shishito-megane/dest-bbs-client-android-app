@@ -105,14 +105,14 @@
     <string name="enter_thumbnail_description">ファイル名</string>
     <string name="default_person_image_id">sample_0</string>
     <string-array name="image_ld_array">
-        <item>sample_0</item>
-        <item>sample_1</item>
-        <item>sample_2</item>
-        <item>sample_3</item>
-        <item>sample_4</item>
-        <item>sample_5</item>
-        <item>sample_6</item>
-        <item>sample_7</item>
+        <item>dog_1</item>
+        <item>dog_2</item>
+        <item>dog_3</item>
+        <item>dog_4</item>
+        <item>dog_5</item>
+        <item>dog_6</item>
+        <item>dog_7</item>
+        <item>dog_8</item>
     </string-array>
     <!--<string name="change_thumbnail_msg">サムネイルを変更する</string>-->
     <!--<string name="change_thumbnail_button">変更</string>-->
