@@ -13,12 +13,14 @@ import java.util.List;
 public class MemberAdapter extends BaseAdapter {
 
     class ViewHolder {
-        ImageView memberImageView;
-        TextView memberTextView;
+        ImageView imageViewMemberImage;
+        TextView textViewMemberName;
+        TextView textViewMemberStatus;
     }
 
     private List<String> mMemberNames;
     private List<Integer> mThumbIds;
+    private List<String> mMemberStatus;
     private LayoutInflater mLayoutInflater;
     private int layoutId;
 
@@ -26,7 +28,9 @@ public class MemberAdapter extends BaseAdapter {
             Context context,
             int layoutId,
             List<String> memberList,
-            List<Integer> imageList) {
+            List<Integer> imageList,
+            List<String> memberStatus
+    ) {
 
         super();
         this.mLayoutInflater = (LayoutInflater)
@@ -34,6 +38,7 @@ public class MemberAdapter extends BaseAdapter {
         this.layoutId = layoutId;
         mThumbIds = imageList;
         mMemberNames = memberList;
+        mMemberStatus = memberStatus;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -47,19 +52,23 @@ public class MemberAdapter extends BaseAdapter {
                     false
             );
             holder = new ViewHolder();
-            holder.memberImageView = convertView.findViewById(
-                    R.id.member_imageview
+            holder.imageViewMemberImage = convertView.findViewById(
+                    R.id.textViewMemberImage
             );
-            holder.memberTextView = convertView.findViewById(
-                    R.id.member_textview
+            holder.textViewMemberName = convertView.findViewById(
+                    R.id.textViewMemberName
+            );
+            holder.textViewMemberStatus = convertView.findViewById(
+                    R.id.textViewMemberStatus
             );
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.memberImageView.setImageResource(mThumbIds.get(position));
-        holder.memberTextView.setText(mMemberNames.get(position));
+        holder.imageViewMemberImage.setImageResource(mThumbIds.get(position));
+        holder.textViewMemberName.setText(mMemberNames.get(position));
+        holder.textViewMemberStatus.setText(mMemberStatus.get(position));
 
         return convertView;
     }

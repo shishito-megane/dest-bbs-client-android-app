@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         final List<String> memberNameList = getMemberNameList();
         Log.d("DB", "長さ:"+String.valueOf(memberNameList.size()));
 
-        // get member name
+        // get member image
         final List<String> memberimageList = getMemberImageList();
         Log.d("DB", "長さ:"+String.valueOf(memberimageList.size()));
 
@@ -90,6 +90,10 @@ public class HomeActivity extends AppCompatActivity {
             memberImageIntegerList.add(imageId);
         }
 
+        // get member status
+        final List<String> memberStatusList = getMemberStatusList();
+        Log.d("DB", "長さ:"+String.valueOf(memberStatusList.size()));
+
         // generation GridView instance
         GridView gridview = findViewById(R.id.gridViewMember);
 
@@ -101,7 +105,8 @@ public class HomeActivity extends AppCompatActivity {
                 this.getApplicationContext(),
                 R.layout.grid_item_member,
                 memberNameList,
-                memberImageIntegerList
+                memberImageIntegerList,
+                memberStatusList
         );
 
         // set gridView adapter
@@ -284,6 +289,39 @@ public class HomeActivity extends AppCompatActivity {
         cursor.close();
         mDbHelper.close();
         return memberImageList;
+    }
+    public List<String> getMemberStatusList() {
+
+        List<String> memberStatusList = new ArrayList<>();
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // select column
+        String[] projection = {
+                MemberTable.ID,
+                MemberTable.COLUMN_STATUS,
+        };
+        Cursor cursor = db.query(
+                MemberTable.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        Log.d("DB", "メンバーの在室状況の総数:"+String.valueOf(cursor.getCount()));
+
+        while(cursor.moveToNext()) {
+            String memberStatus = cursor.getString(
+                    cursor.getColumnIndexOrThrow(MemberTable.COLUMN_STATUS)
+            );
+            memberStatusList.add(memberStatus);
+        }
+        cursor.close();
+        mDbHelper.close();
+        return memberStatusList;
     }
     public void saveData(
             String name,
