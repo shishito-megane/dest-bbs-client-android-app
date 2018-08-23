@@ -4,9 +4,9 @@ import android.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -41,7 +41,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         final String calenderId = getArguments().getString("personCalender");
 
         builder.setSingleChoiceItems(
-                R.array.status_entering_room_array,
+                R.array.status_list_array,
                 defaultItem,
                 new DialogInterface.OnClickListener() {
 
@@ -65,17 +65,20 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                     Log.d("checkedItem:", "" + checkedItems.get(0));
                 }
 
-                int statusCodeInt = checkedItems.get(0);
+                // get checked item
+                int statusCode = checkedItems.get(0);
                 Resources res = getResources();
-                TypedArray array = res.obtainTypedArray(R.array.status_entering_room_value);
-                String statusCode =  array.getString(statusCodeInt);
+                TypedArray array = res.obtainTypedArray(R.array.status_title_array);
+                String statusTitle =  array.getString(statusCode);
                 array.recycle();
 
                 // add recording function
                 // register = new StatusRegistrationTask(calenderId);
                 register = new StatusRegistrationTask(
                         calenderId,
-                        statusCode
+                        statusCode,
+                        statusTitle,
+                        getActivity()
                 );
                 register.execute();
 
@@ -113,18 +116,24 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
     private class StatusRegistrationTask extends AsyncTask<Long, Integer, Long> {
 
         String calenderOwnerId;
-        String statusCode;
+        int statusCode;
+        String statusTitle;
+        Context context;
 
         /**
          * コンストラクタ
          */
         private StatusRegistrationTask(
                 String calenderOwnerId,
-                String statusCode
+                int statusCode,
+                String statusTitle,
+                Context context
         ) {
             super();
             this.calenderOwnerId   = calenderOwnerId;
             this.statusCode = statusCode;
+            this.statusTitle = statusTitle;
+            this.context = context;
         }
 
         // プロジェクション配列。
@@ -151,7 +160,8 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         @Override
         protected Long doInBackground(Long... calenderOwnerIds) {
 
-            final String eventColorKey = "4";
+            // set color key (depend statusCode. 0 is not exist, so +1 set)
+            final String eventColorKey = String.valueOf(this.statusCode + 1);
 
             // get calenderId from calenderOwnerId
             final long calenderId = this.getCalenderId(
@@ -164,8 +174,8 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
             Long eventId = this.addEvent(
                     calenderId,
-                    this.statusCode,
                     "",
+                    getString(R.string.app_name),
                     eventColorKey,
                     startTime,
                     endTime
@@ -185,7 +195,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
             final String sortOrder = null;
 
             // クエリを発行してカーソルを取得する
-            final ContentResolver cr = getActivity().getContentResolver();
+            final ContentResolver cr = this.context.getContentResolver();
             final Cursor cur = cr.query(uri, projection, selection, selectionArgs, sortOrder);
 
             // カレンダーの総数取得
@@ -218,7 +228,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                 final long startMillis,
                 final long endMillis
         ) {
-            final ContentResolver cr = getActivity().getContentResolver();
+            final ContentResolver cr = this.context.getContentResolver();
 
             final ContentValues values = new ContentValues();
             values.put(CalendarContract.Events.CALENDAR_ID, calendarId);
@@ -242,27 +252,30 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         @Override
         protected void onPostExecute(Long eventId) {
 
-            // TODO: 処理結果をなんとかして通知したい
-//            // display toast
-//            Toast toast = Toast.makeText(
-//                    getActivity(),
-//                    getString(R.string.finish_update_status),
-//                    Toast.LENGTH_SHORT
-//            );
-//            toast.show();
+            Log.d("カレンダー", "在室状況を記録" );
+            // display toast
+            Toast toast = Toast.makeText(
+                    this.context,
+                    // XXX: getString(R.string.finish_update_status) で取得したい
+                    "記録しました．",
+                    Toast.LENGTH_SHORT
+            );
+            toast.show();
+
         }
 
         @Override
         protected void onCancelled() {
 
-            // TODO: 処理結果をなんとかして通知したい
-//            // display toast
-//            Toast toast = Toast.makeText(
-//                    getActivity(),
-//                    getString(R.string.cancelled_update_status),
-//                    Toast.LENGTH_SHORT
-//            );
-//            toast.show();
+            Log.d("カレンダー", "在室状況の記録をキャンセル" );
+            // display toast
+            Toast toast = Toast.makeText(
+                    this.context,
+                    // XXX: getString(R.string.cancelled_update_status) で取得したい
+                    "記録をキャンセルしました．",
+                    Toast.LENGTH_SHORT
+            );
+            toast.show();
         }
     }
 }

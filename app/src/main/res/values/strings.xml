@@ -38,26 +38,20 @@
     <string name="registering_status">Registering...</string>
     <string name="finish_update_status">I recorded.</string>
     <string name="cancelled_update_status">I cancelled recording.</string>
-    <string-array name="status_entering_room_array">
+    <string-array name="status_list_array">
         <item>Record entering room</item>
         <item>Go to class</item>
         <item>Go to Meeting</item>
         <item>Temporary Outing</item>
         <item>Return Home</item>
     </string-array>
-    <string-array name="status_entering_room_value">
+    <string-array name="status_title_array">
         <item>入室</item>
         <item>講義</item>
         <item>会議</item>
         <item>外出</item>
         <item>帰宅</item>
     </string-array>
-    <!--<string-array name="status_leaving_room_array">-->
-        <!--<item>Go to class</item>-->
-        <!--<item>Go to Meeting</item>-->
-        <!--<item>Temporary Outing</item>-->
-        <!--<item>Return Home</item>-->
-    <!--</string-array>-->
 
     <!-- DeletePersonFlagment -->
     <string name="delete_person_dialog_title">Delete person</string>
