@@ -57,9 +57,6 @@ public class PersonActivity extends AppCompatActivity {
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
 
-        // get PERSON_CALENDAR
-        final String personCalender = getPersonCalender(PersonInfo.personId);
-
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
         dialogCall.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +68,7 @@ public class PersonActivity extends AppCompatActivity {
             }
         });
 
-        // call button function
+        // Its me button function
         Button dialogItsMe = findViewById(R.id.buttonItsMe);
         dialogItsMe.setOnClickListener(new View.OnClickListener() {
 
@@ -79,7 +76,7 @@ public class PersonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UpdateStatusDialogFlagment dialog = new UpdateStatusDialogFlagment();
                 Bundle args = new Bundle();
-                args.putString("personCalender", personCalender);
+                args.putInt("personId", PersonInfo.personId);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "itsme");
             }
@@ -272,53 +269,5 @@ public class PersonActivity extends AppCompatActivity {
         mDbHelper.close();
 
         return memberDetailList.get(0);
-    }
-    public String getPersonCalender(
-            int Id
-    ) {
-
-        List<String> memberCalenderList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_CALENDAR,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberCalender = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_CALENDAR)
-            );
-            memberCalenderList.add(memberCalender);
-        }
-
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberCalenderList.get(0);
     }
 }
