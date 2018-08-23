@@ -30,14 +30,6 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
-        // hide navigation var
-        View decor = this.getWindow().getDecorView();
-        decor.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        );
-
         // get PERSON_ID
         Intent intent = getIntent();
         PersonInfo.personId = intent.getIntExtra(
@@ -92,6 +84,18 @@ public class PersonActivity extends AppCompatActivity {
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
+    }
+
+    // hide navigation var
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View decor = this.getWindow().getDecorView();
+        decor.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
     }
 
     // Set Menu on the Activity
