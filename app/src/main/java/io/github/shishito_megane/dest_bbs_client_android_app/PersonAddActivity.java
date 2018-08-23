@@ -52,9 +52,9 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
     GoogleAccountCredential mCredential;
     private TextView textViewCalenderIdResult;
-    private Button buttonCreateNewCalender;
     private EditText editTextCalenderId;
     ProgressDialog mProgress;
+    private String personName;
 
     static final int REQUEST_ACCOUNT_PICKER_ERR_CODE = 1000;
     static final int REQUEST_AUTHORIZATION_ERR_CODE = 1001;
@@ -70,18 +70,27 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_add);
 
-        buttonCreateNewCalender = (Button)findViewById(R.id.buttonCreateNewCalender);
+        final Button buttonCreateNewCalender = (Button)findViewById(R.id.buttonCreateNewCalender);
         editTextCalenderId = (EditText)findViewById(R.id.editTextCalenderId);
         textViewCalenderIdResult = (TextView)findViewById(R.id.textViewCalenderIdResult);
+        final EditText editPersonName = (EditText)findViewById(R.id.editTextPersonName);
 
         // Google Calendar API を呼び出す
         buttonCreateNewCalender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 buttonCreateNewCalender.setEnabled(false);
                 textViewCalenderIdResult.setText("");
                 editTextCalenderId.setText("");
+
+                // get inputted personName
+                personName = editPersonName.getText().toString();
+
+                // create new calender task
+                // personName is calender title
                 getResultsFromApi();
+
                 buttonCreateNewCalender.setEnabled(true);
             }
         });
@@ -197,7 +206,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
             textViewCalenderIdResult.setText(getString(R.string.no_internet_connection_msg));
         }
         else {
-            new MakeRequestTask(mCredential).execute();
+            new MakeRequestTask(mCredential, personName).execute();
         }
     }
 
@@ -389,14 +398,19 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
         private com.google.api.services.calendar.Calendar mService = null;
         private Exception mLastError = null;
+        String calenderTitle;
 
-        public MakeRequestTask(GoogleAccountCredential credential) {
+        public MakeRequestTask(
+                GoogleAccountCredential credential,
+                String calenderTitile
+        ) {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.calendar.Calendar
                     .Builder(transport, jsonFactory, credential)
                     .setApplicationName("Google Calendar API Android Quickstart")
                     .build();
+            this.calenderTitle = calenderTitile;
         }
 
         /**
@@ -425,7 +439,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
             // 新規にカレンダーを作成する
             com.google.api.services.calendar.model.Calendar calendar = new Calendar();
             // カレンダーにタイトルを設定する
-            calendar.setSummary(getString(R.string.default_calender_title));
+            calendar.setSummary(this.calenderTitle);
             // カレンダーにタイムゾーンを設定する
             calendar.setTimeZone("Asia/Tokyo");
 
