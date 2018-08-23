@@ -181,14 +181,18 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         DbHelper mDbHelper = new DbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("name", name);
-        values.put("detail", detail);
-        values.put("image", image);
-        values.put("address", address);
-        values.put("calender", calender);
-        values.put("status", status);
+        values.put(DbContract.MemberTable.COLUMN_NAME, name);
+        values.put(DbContract.MemberTable.COLUMN_DETAIL, detail);
+        values.put(DbContract.MemberTable.COLUMN_IMAGE, image);
+        values.put(DbContract.MemberTable.COLUMN_ADDRESS, address);
+        values.put(DbContract.MemberTable.COLUMN_CALENDAR, calender);
+        values.put(DbContract.MemberTable.COLUMN_STATUS, status);
 
-        long newRowId = db.insert("member", null, values);
+        long newRowId = db.insert(
+                DbContract.MemberTable.TABLE_NAME,
+                null,
+                values
+        );
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
 
         db.close();
