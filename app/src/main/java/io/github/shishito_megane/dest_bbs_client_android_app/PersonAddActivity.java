@@ -96,6 +96,9 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
                 // get inputted personName
                 personName = editPersonName.getText().toString();
+                if (personName.length() < 1){
+                    personName = getString(R.string.default_person_name);
+                }
 
                 // create new calender task
                 // personName is calender title
