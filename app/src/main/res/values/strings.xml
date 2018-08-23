@@ -97,7 +97,7 @@
     <string name="install_google_play_service_msg">This app requires Google Play Services.
         Please install google Play Services on your device and relaunch this app.</string>
     <string name="err_create_calender_msg">No results returned. Creation failed.</string>
-    <string name="result_create_calender">Calendar created.</string>
+    <string name="result_create_calender">Calendar created.<b>If you use, please sync calender app!</b></string>
     <string name="cancelled_create_calender">Cancelled create calendar.</string>
     <string name="default_calender_title">Dest BBS Status</string>
     <!--<string name="coordinate_calender_msg">Coordinate existing calender</string>-->

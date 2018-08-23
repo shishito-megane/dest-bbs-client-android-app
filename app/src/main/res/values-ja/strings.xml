@@ -98,7 +98,7 @@
     <string name="install_google_play_service_msg">このアプリはGoogle Play Services が必要です.
         Google Play Services をインストールしアプリを再起動してください.</string>
     <string name="err_create_calender_msg">カレンダーの作成を失敗しました．</string>
-    <string name="result_create_calender">カレンダーが作成されました</string>
+    <string name="result_create_calender">カレンダーが作成されました．<b>使用するにはカレンダーアプリから同期設定をしてください．</b></string>
     <string name="cancelled_create_calender">カレンダーの作成を中止しました．</string>
     <string name="default_calender_title">行先掲示板在室状況</string>
     <!--<string name="coordinate_calender_msg">既存のカレンダーと連携する</string>-->
