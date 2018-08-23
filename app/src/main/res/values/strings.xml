@@ -102,7 +102,7 @@
     <!--cf. "pref_default_address" -->
     <string name="thumbnail_setting_title">Thumbnail setting</string>
     <string name="enter_thumbnail_description">Filename</string>
-    <string name="default_person_image_id">sample_0</string>
+    <string name="default_person_image_id">dog_1</string>
     <string-array name="image_ld_array">
         <item>dog_1</item>
         <item>dog_2</item>
