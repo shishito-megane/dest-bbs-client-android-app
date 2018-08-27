@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static io.github.shishito_megane.dest_bbs_client_android_app.DbContract.MemberTable;
@@ -56,78 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textViewWelcomeMsg);
         textView.setText(welcome_msg);
 
-        // get member ids
-        List<Integer> memberIdListTmp = getMemberIdList();
-        Log.d("DB", "長さ:"+String.valueOf(memberIdListTmp.size()));
-        if (memberIdListTmp.size() == 0){
-            saveData(
-                    getString(R.string.default_person_name),
-                    getString(R.string.default_person_detail),
-                    getString(R.string.default_person_image_id),
-                    getString(R.string.pref_default_address),
-                    getString(R.string.default_person_calendar),
-                    getString(R.string.default_person_status)
-            );
-            memberIdListTmp = getMemberIdList();
-        }
-        final List<Integer> memberIdList = memberIdListTmp;
-
-        // get member name
-        final List<String> memberNameList = getMemberNameList();
-        Log.d("DB", "長さ:"+String.valueOf(memberNameList.size()));
-
-        // get member image
-        final List<String> memberimageList = getMemberImageList();
-        Log.d("DB", "長さ:"+String.valueOf(memberimageList.size()));
-
-        // for-each, convert memberID to R.drawable.XX and convert to int, register array
-        // for-each, member名をR.drawable.名前としてintに変換してarrayに登録
-        // Resource ID (Member Image ID)
-        final List<Integer> memberImageIntegerList = new ArrayList<>();
-        for (String id : memberimageList) {
-            int imageId = getResources().getIdentifier(
-                    id, "drawable", getPackageName());
-            memberImageIntegerList.add(imageId);
-        }
-
-        // get member status
-        final List<String> memberStatusList = getMemberStatusList();
-        Log.d("DB", "長さ:"+String.valueOf(memberStatusList.size()));
-
-        // generation GridView instance
-        GridView gridview = findViewById(R.id.gridViewMember);
-
-        // generation GridAdapter instance, inherited BaseAdapter
-        // BaseAdapter を継承したGridAdapterのインスタンスを生成
-        // 子要素のレイアウトファイル grid_items.xml を
-        // activity_main.xml に inflate するためにGridAdapterに引数として渡す
-        MemberAdapter adapter = new MemberAdapter(
-                this.getApplicationContext(),
-                R.layout.grid_item_member,
-                memberNameList,
-                memberImageIntegerList,
-                memberStatusList
-        );
-
-        // set gridView adapter
-        gridview.setAdapter(adapter);
-
-        // Create a message handling object as an anonymous class.
-        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-            public void onItemClick(
-                    AdapterView parent,
-                    View v,
-                    int position,
-                    long id
-            ) {
-                Intent intent = new Intent(getApplication(), PersonActivity.class);
-                intent.putExtra(PERSON_ID, memberIdList.get(position));
-                startActivity( intent );
-            }
-        };
-
-        gridview.setOnItemClickListener(mMessageClickedHandler);
-
 //        // set progress bar (calender get test )
 //        mProgress = new ProgressDialog(this);
 //        mProgress.setMessage(getString(R.string.get_calender_toast));
@@ -147,6 +77,8 @@ public class HomeActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
+
+        handler.post(r);
     }
 
     // Set Menu on the Activity
@@ -187,6 +119,104 @@ public class HomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    final Handler handler = new Handler();
+    final Runnable r = new Runnable() {
+        @Override
+        public void run() {
+
+            // get now hour
+            int  nowHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+
+            // check status and update
+            // 11時になっても帰宅中の人は遅刻にする
+            if( nowHour == 11 ){
+                updatePersonStatusLate();
+            }
+            // 15時になったら遅刻は帰宅にする
+            else if (nowHour == 15){
+                updatePersonStatusAbsence();
+            }
+            // 4時になったら全員帰宅にする
+            else if (nowHour == 4){
+                updatePersonStatusGohome();
+            }
+
+            Log.d("timer", "現在時間: "+nowHour);
+
+            // get member ids
+            List<Integer> memberIdListTmp = getMemberIdList();
+            Log.d("DB", "長さ:"+String.valueOf(memberIdListTmp.size()));
+            if (memberIdListTmp.size() == 0){
+                saveData(
+                        getString(R.string.default_person_name),
+                        getString(R.string.default_person_detail),
+                        getString(R.string.default_person_image_id),
+                        getString(R.string.pref_default_address),
+                        getString(R.string.default_person_calendar),
+                        getString(R.string.default_person_status)
+                );
+                memberIdListTmp = getMemberIdList();
+            }
+            final List<Integer> memberIdList = memberIdListTmp;
+
+            // get member name
+            final List<String> memberNameList = getMemberNameList();
+            Log.d("DB", "長さ:"+String.valueOf(memberNameList.size()));
+
+            // get member image
+            final List<String> memberimageList = getMemberImageList();
+            Log.d("DB", "長さ:"+String.valueOf(memberimageList.size()));
+
+            // for-each, convert memberID to R.drawable.XX and convert to int, register array
+            // for-each, member名をR.drawable.名前としてintに変換してarrayに登録
+            // Resource ID (Member Image ID)
+            final List<Integer> memberImageIntegerList = new ArrayList<>();
+            for (String id : memberimageList) {
+                int imageId = getResources().getIdentifier(
+                        id, "drawable", getPackageName());
+                memberImageIntegerList.add(imageId);
+            }
+
+            // get member status
+            final List<String> memberStatusList = getMemberStatusList();
+            Log.d("DB", "長さ:"+String.valueOf(memberStatusList.size()));
+
+            // generation GridView instance
+            GridView gridview = findViewById(R.id.gridViewMember);
+
+            //Reload this activity
+            MemberAdapter adapter = new MemberAdapter(
+                    getBaseContext(),
+                    R.layout.grid_item_member,
+                    memberNameList,
+                    memberImageIntegerList,
+                    memberStatusList
+            );
+            gridview.setAdapter(adapter);
+
+            // Create a message handling object as an anonymous class.
+            AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+                public void onItemClick(
+                        AdapterView parent,
+                        View v,
+                        int position,
+                        long id
+                ) {
+                    Intent intent = new Intent(getApplication(), PersonActivity.class);
+                    intent.putExtra(PERSON_ID, memberIdList.get(position));
+                    startActivity( intent );
+                }
+            };
+
+            gridview.setOnItemClickListener(mMessageClickedHandler);
+
+            // 10分ごとに
+            handler.postDelayed(this, 1000 * 5 );
+        }
+    };
+
 
     // DB
     public List<Integer> getMemberIdList() {
@@ -323,6 +353,7 @@ public class HomeActivity extends AppCompatActivity {
         mDbHelper.close();
         return memberStatusList;
     }
+
     public void saveData(
             String name,
             String detail,
@@ -343,6 +374,74 @@ public class HomeActivity extends AppCompatActivity {
 
         long newRowId = db.insert("member", null, values);
         Log.d("DB", "挿入"+name+String.valueOf(newRowId));
+
+        db.close();
+        mDbHelper.close();
+    }
+
+    /**
+     *   MemberTable.COLUMN_STATUS が 帰宅 になってる人を 遅刻 にします
+     */
+    public void updatePersonStatusLate() {
+
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.MemberTable.COLUMN_STATUS, "遅刻");
+        String selection = MemberTable.COLUMN_STATUS + " = ?";  // WHERE 句
+        String[] selectionArgs = { "帰宅" };
+
+        db.update(
+                DbContract.MemberTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        db.close();
+        mDbHelper.close();
+    }
+    /**
+     *  MemberTable.COLUMN_STATUS が 遅刻 になってる人を 欠席 にします
+     */
+    public void updatePersonStatusAbsence() {
+
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.MemberTable.COLUMN_STATUS, "欠席");
+        String selection = MemberTable.COLUMN_STATUS + " = ?";  // WHERE 句
+        String[] selectionArgs = { "遅刻" };
+
+        db.update(
+                DbContract.MemberTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        db.close();
+        mDbHelper.close();
+    }
+    /**
+     *  MemberTable.COLUMN_STATUS を 帰宅 にします
+     */
+    public void updatePersonStatusGohome() {
+
+        DbHelper mDbHelper = new DbHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.MemberTable.COLUMN_STATUS, "帰宅");
+
+        db.update(
+                DbContract.MemberTable.TABLE_NAME,
+                values,
+                null,
+                null
+        );
 
         db.close();
         mDbHelper.close();
