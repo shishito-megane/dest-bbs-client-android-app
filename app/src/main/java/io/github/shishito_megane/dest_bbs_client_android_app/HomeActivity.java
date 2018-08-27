@@ -183,6 +183,9 @@ public class HomeActivity extends AppCompatActivity {
             final List<String> memberStatusList = getMemberStatusList();
             Log.d("DB", "長さ:"+String.valueOf(memberStatusList.size()));
 
+            // get member status color
+            final List<Integer> memberStatusColorList = generatorMemberStatusColorList(memberStatusList);
+
             // generation GridView instance
             GridView gridview = findViewById(R.id.gridViewMember);
 
@@ -192,7 +195,8 @@ public class HomeActivity extends AppCompatActivity {
                     R.layout.grid_item_member,
                     memberNameList,
                     memberImageIntegerList,
-                    memberStatusList
+                    memberStatusList,
+                    memberStatusColorList
             );
             gridview.setAdapter(adapter);
 
@@ -352,6 +356,27 @@ public class HomeActivity extends AppCompatActivity {
         cursor.close();
         mDbHelper.close();
         return memberStatusList;
+    }
+
+    public List<Integer> generatorMemberStatusColorList(
+            List<String> memberStatusList
+    ){
+        List<Integer> memberStatusListColor  = new ArrayList<>();
+
+        int color;
+
+        for (String status : memberStatusList) {
+            if (status.equals("入室")){
+                color = getResources().getColor(R.color.colorTypeA);
+            }
+            else{
+                color = getResources().getColor(R.color.colorTypeB);
+            }
+
+            memberStatusListColor.add(color);
+        }
+
+        return memberStatusListColor;
     }
 
     public void saveData(

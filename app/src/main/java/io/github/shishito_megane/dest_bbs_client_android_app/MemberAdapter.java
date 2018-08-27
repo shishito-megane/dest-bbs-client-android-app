@@ -21,6 +21,7 @@ public class MemberAdapter extends BaseAdapter {
     private List<String> mMemberNames;
     private List<Integer> mThumbIds;
     private List<String> mMemberStatus;
+    private List<Integer> mMemberStatusColor;
     private LayoutInflater mLayoutInflater;
     private int layoutId;
 
@@ -29,7 +30,8 @@ public class MemberAdapter extends BaseAdapter {
             int layoutId,
             List<String> memberList,
             List<Integer> imageList,
-            List<String> memberStatus
+            List<String> memberStatus,
+            List<Integer> memberColorStatus
     ) {
 
         super();
@@ -39,6 +41,7 @@ public class MemberAdapter extends BaseAdapter {
         mThumbIds = imageList;
         mMemberNames = memberList;
         mMemberStatus = memberStatus;
+        mMemberStatusColor = memberColorStatus;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -69,6 +72,7 @@ public class MemberAdapter extends BaseAdapter {
         holder.imageViewMemberImage.setImageResource(mThumbIds.get(position));
         holder.textViewMemberName.setText(mMemberNames.get(position));
         holder.textViewMemberStatus.setText(mMemberStatus.get(position));
+        holder.textViewMemberStatus.setBackgroundColor(mMemberStatusColor.get(position));
 
         return convertView;
     }
