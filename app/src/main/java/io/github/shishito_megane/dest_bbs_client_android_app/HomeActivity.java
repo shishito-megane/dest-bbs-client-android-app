@@ -217,7 +217,7 @@ public class HomeActivity extends AppCompatActivity {
             gridview.setOnItemClickListener(mMessageClickedHandler);
 
             // 10分ごとに
-            handler.postDelayed(this, 1000 * 5 );
+            handler.postDelayed(this, 1000 * 60 * 10);
         }
     };
 
