@@ -1,8 +1,6 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,17 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-class PersonInfo {
-
-    public static int personId;
-
-}
 
 public class PersonActivity extends AppCompatActivity {
+
+    int personId;
+    String personName;
+    int personImageId;
+    String personDetail;
+    String personCalender;
+    String personStatus;
+
+    private Db db = new Db(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,30 +30,38 @@ public class PersonActivity extends AppCompatActivity {
 
         // get PERSON_ID
         Intent intent = getIntent();
-        PersonInfo.personId = intent.getIntExtra(
+        personId = intent.getIntExtra(
                 HomeActivity.PERSON_ID,
                 0
         );
-        Log.d("DB", "選択: "+ String.valueOf(PersonInfo.personId));
+        personName = intent.getStringExtra(
+                HomeActivity.PERSON_NAME
+        );
+        personImageId = intent.getIntExtra(
+                HomeActivity.PERSON_IMAGEID,
+                0
+        );
+        Log.d("PersonActivity", "選択された人: "+ String.valueOf(personId));
 
-        // get PERSON_IMAGE_ID
-        final String personImageId = getPersonImageId(PersonInfo.personId);
-        int imageIdInt = getResources().getIdentifier(personImageId, "drawable", getPackageName());
         // set person image
         ImageView imageViewPersonImage = findViewById(R.id.imageViewPerson);
-        imageViewPersonImage.setImageResource(imageIdInt);
+        imageViewPersonImage.setImageResource(personImageId);
 
-        // get person name
-        final String personName = getPersonName(PersonInfo.personId);
         // set person name (person id)
         TextView textViewPersonID = findViewById(R.id.textViewPersonName);
         textViewPersonID.setText(personName);
 
         // get PERSON_DETAIL
-        final String personDetail = getPersonDetail(PersonInfo.personId);
+        personDetail = db.getPersonDetail(personId);
         // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
+
+        // get PERSON_CALENDER
+        personCalender = db.getPersonCalender(personId);
+
+        // get PERSON_STATUS
+        personStatus = db.getPersonStatus(personId);
 
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
@@ -68,7 +74,7 @@ public class PersonActivity extends AppCompatActivity {
             }
         });
 
-        // Its me button function
+        // Its me (update status) button function
         Button dialogItsMe = findViewById(R.id.buttonItsMe);
         dialogItsMe.setOnClickListener(new View.OnClickListener() {
 
@@ -76,18 +82,21 @@ public class PersonActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UpdateStatusDialogFlagment dialog = new UpdateStatusDialogFlagment();
                 Bundle args = new Bundle();
-                args.putInt("personId", PersonInfo.personId);
+                args.putInt("personId", personId);
+                args.putString("personCalender", personCalender);
+                args.putString("personStatus", personStatus);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
     }
 
-    // hide navigation var
     @Override
     protected void onResume() {
         super.onResume();
         View decor = this.getWindow().getDecorView();
+
+        // hide navigation bar & status bar
         decor.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -95,10 +104,9 @@ public class PersonActivity extends AppCompatActivity {
         );
     }
 
-    // Set Menu on the Activity
+    // set Menu on the Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // 参照するリソースは上でリソースファイルに付けた名前と同じもの
         getMenuInflater().inflate(R.menu.personactivity_action_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -109,7 +117,7 @@ public class PersonActivity extends AppCompatActivity {
             case R.id.menuPersonDelete:
                 DeletePersonFlagment dialog = new DeletePersonFlagment();
                 Bundle args = new Bundle();
-                args.putInt("personId", PersonInfo.personId);
+                args.putInt("personId", personId);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "delete_person");
                 return true;
@@ -124,150 +132,5 @@ public class PersonActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    // DB
-    public String getPersonImageId(
-            int Id
-    ) {
-
-        List<String> memberImageList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_IMAGE,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーの画像のレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberImageId = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_IMAGE)
-            );
-            memberImageList.add(memberImageId);
-        }
-
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberImageList.get(0);
-    }
-    public String getPersonName(
-            int Id
-    ) {
-
-        List<String> memberNameList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_NAME,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーの名前のレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberName = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_NAME)
-            );
-            memberNameList.add(memberName);
-        }
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberNameList.get(0);
-    }
-    public String getPersonDetail(
-            int Id
-    ) {
-
-        List<String> memberDetailList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_DETAIL,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーの詳細のレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberDetail = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_DETAIL)
-            );
-            memberDetailList.add(memberDetail);
-        }
-
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberDetailList.get(0);
     }
 }

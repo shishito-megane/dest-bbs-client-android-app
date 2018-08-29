@@ -30,7 +30,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
     StatusRegistrationTask register;
 
     int personId;
-    String calenderId;
+    String personCalender;
     String oldStatusCode;
     String newStatusCode;
 
@@ -44,46 +44,35 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
         // get ags
         personId = getArguments().getInt("personId");
+        personCalender = getArguments().getString("personCalender");
+        oldStatusCode = getArguments().getString("personStatus");
 
-        // get calenderId, statusCode
-        calenderId = getPersonCalender(personId);
-        oldStatusCode = getPersonStatus(personId);
-
-
-        // 更新前の在室状況が入室なら
+        // if status code is "入室"
         if (oldStatusCode.equals("入室")){
-
             builder.setTitle(R.string.update_leaving_room_title);
-
             builder.setSingleChoiceItems(
                     R.array.status_leaving_room_list,
                     defaultItem,
                     new DialogInterface.OnClickListener() {
-
                         public void onClick(DialogInterface dialog, int which) {
                             checkedItems.clear();
                             checkedItems.add(which);
-                            // The 'which' argument contains the index position
-                            // of the selected item
                         }
-                    });
+                    }
+            );
         }
         else {
-
             builder.setTitle(R.string.update_entering_room_title);
-
             builder.setSingleChoiceItems(
                     R.array.status_entering_room_list,
                     defaultItem,
                     new DialogInterface.OnClickListener() {
-
                         public void onClick(DialogInterface dialog, int which) {
                             checkedItems.clear();
                             checkedItems.add(which);
-                            // The 'which' argument contains the index position
-                            // of the selected item
                         }
-                    });
+                    }
+            );
         }
 
         builder.setPositiveButton(
@@ -116,11 +105,12 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
 
                     // add recording function
                     // DB
-                    updatePersonStatus(personId, newStatusCode);
-
+                    Context context = getActivity();
+                    Db db = new Db(context);
+                    db.updatePersonStatus(personId, newStatusCode);
                     // calender
                     register = new StatusRegistrationTask(
-                            calenderId,
+                            personCalender,
                             newStatusCode,
                             getActivity()
                     );
@@ -155,128 +145,6 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         });
 
         return builder.create();
-    }
-
-    // DB
-    public String getPersonCalender(
-            int Id
-    ) {
-
-        List<String> memberCalenderList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(getActivity());
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_CALENDAR,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberCalender = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_CALENDAR)
-            );
-            memberCalenderList.add(memberCalender);
-        }
-
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberCalenderList.get(0);
-    }
-    public String getPersonStatus(
-            int Id
-    ) {
-
-        List<String> memberStatusList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(getActivity());
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                DbContract.MemberTable.ID,
-                DbContract.MemberTable.COLUMN_STATUS,
-        };
-        String selection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cur = db.query(
-                DbContract.MemberTable.TABLE_NAME,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        // get total records value
-        int contentValue = cur.getCount();
-        Log.d("DB", "該当メンバーのカレンダーのレコード数:"+String.valueOf(contentValue));
-
-        while(cur.moveToNext()) {
-            String memberCalender = cur.getString(
-                    cur.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_STATUS)
-            );
-            memberStatusList.add(memberCalender);
-        }
-
-        // check
-        if (contentValue == 1){
-            Log.d("DB", "総数が1なので良い" );
-            Log.d("DB", memberStatusList.get(0) );
-        } else {
-            Log.w("DB", "総数が1ではない" );
-        }
-
-        cur.close();
-        mDbHelper.close();
-
-        return memberStatusList.get(0);
-    }
-    public void updatePersonStatus(
-            int Id,
-            String statusCode
-    ) {
-
-        DbHelper mDbHelper = new DbHelper(getActivity());
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DbContract.MemberTable.COLUMN_STATUS, statusCode);
-        String selection = DbContract.MemberTable.ID + " = ?";  // WHERE 句
-        String[] selectionArgs = { String.valueOf(Id) };
-
-        db.update(
-                DbContract.MemberTable.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs
-        );
-
-        db.close();
-        mDbHelper.close();
     }
 
     // Calender
@@ -365,12 +233,18 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
             final Uri uri = CalendarContract.Calendars.CONTENT_URI;
             final String[] projection = CALENDAR_PROJECTION;
             final String selection = CalendarContract.Calendars.OWNER_ACCOUNT + "= ?";
-            final String[] selectionArgs = { calenderOwnerId};
+            final String[] selectionArgs = { calenderOwnerId };
             final String sortOrder = null;
 
             // クエリを発行してカーソルを取得する
             final ContentResolver cr = this.context.getContentResolver();
-            final Cursor cur = cr.query(uri, projection, selection, selectionArgs, sortOrder);
+            final Cursor cur = cr.query(
+                    uri,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    sortOrder
+            );
 
             // カレンダーの総数取得
             int calContentValue = cur.getCount();

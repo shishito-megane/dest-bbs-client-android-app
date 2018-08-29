@@ -1,18 +1,14 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
@@ -28,18 +24,17 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static io.github.shishito_megane.dest_bbs_client_android_app.DbContract.MemberTable;
 
 public class HomeActivity extends AppCompatActivity {
 
     public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
+    public static final String PERSON_NAME = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_NAME";
+    public static final String PERSON_IMAGEID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGEID";
 
-//    ProgressDialog mProgress;
-
+    private Db db = new Db(this);
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +53,16 @@ public class HomeActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textViewWelcomeMsg);
         textView.setText(welcome_msg);
 
-//        // set progress bar (calender get test )
-//        mProgress = new ProgressDialog(this);
-//        mProgress.setMessage(getString(R.string.get_calender_toast));
-
         // test calender
         preCheckCalender();
 
     }
 
-    // hide navigation var
     @Override
     protected void onResume() {
         super.onResume();
+
+        // hide navigation bar & status bar
         View decor = this.getWindow().getDecorView();
         decor.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -81,10 +73,9 @@ public class HomeActivity extends AppCompatActivity {
         handler.post(r);
     }
 
-    // Set Menu on the Activity
+    // set menu on the Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // 参照するリソースは上でリソースファイルに付けた名前と同じもの
         getMenuInflater().inflate(R.menu.homeactivity_action_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -120,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    final Handler handler = new Handler();
+    // run for each reload Activity
     final Runnable r = new Runnable() {
         @Override
         public void run() {
@@ -128,28 +119,24 @@ public class HomeActivity extends AppCompatActivity {
             // get now hour
             int  nowHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-
             // check status and update
             // 11時になっても帰宅中の人は遅刻にする
             if( nowHour == 11 ){
-                updatePersonStatusLate();
+                db.updatePersonStatusLate();
             }
             // 15時になったら遅刻は帰宅にする
             else if (nowHour == 15){
-                updatePersonStatusAbsence();
+                db.updatePersonStatusAbsence();
             }
             // 4時になったら全員帰宅にする
             else if (nowHour == 4){
-                updatePersonStatusGohome();
+                db.updatePersonStatusGohome();
             }
 
-            Log.d("timer", "現在時間: "+nowHour);
-
             // get member ids
-            List<Integer> memberIdListTmp = getMemberIdList();
-            Log.d("DB", "長さ:"+String.valueOf(memberIdListTmp.size()));
+            List<Integer> memberIdListTmp = db.getMemberIdList();
             if (memberIdListTmp.size() == 0){
-                saveData(
+                db.saveData(
                         getString(R.string.default_person_name),
                         getString(R.string.default_person_detail),
                         getString(R.string.default_person_image_id),
@@ -157,50 +144,35 @@ public class HomeActivity extends AppCompatActivity {
                         getString(R.string.default_person_calendar),
                         getString(R.string.default_person_status)
                 );
-                memberIdListTmp = getMemberIdList();
+                memberIdListTmp = db.getMemberIdList();
             }
             final List<Integer> memberIdList = memberIdListTmp;
 
-            // get member name
-            final List<String> memberNameList = getMemberNameList();
-            Log.d("DB", "長さ:"+String.valueOf(memberNameList.size()));
+            // get member info
+            final List<String> memberNameList = db.getMemberNameList();
+            final List<Integer> memberImageList = db.getMemberImageList();
+            final List<String> memberStatusList = db.getMemberStatusList();
 
-            // get member image
-            final List<String> memberimageList = getMemberImageList();
-            Log.d("DB", "長さ:"+String.valueOf(memberimageList.size()));
-
-            // for-each, convert memberID to R.drawable.XX and convert to int, register array
-            // for-each, member名をR.drawable.名前としてintに変換してarrayに登録
-            // Resource ID (Member Image ID)
-            final List<Integer> memberImageIntegerList = new ArrayList<>();
-            for (String id : memberimageList) {
-                int imageId = getResources().getIdentifier(
-                        id, "drawable", getPackageName());
-                memberImageIntegerList.add(imageId);
-            }
-
-            // get member status
-            final List<String> memberStatusList = getMemberStatusList();
-            Log.d("DB", "長さ:"+String.valueOf(memberStatusList.size()));
-
-            // get member status color
-            final List<Integer> memberStatusColorList = generatorMemberStatusColorList(memberStatusList);
+            // generate member status color list
+            final List<Integer> memberStatusColorList = db.generatorMemberStatusColorList(
+                    memberStatusList
+            );
 
             // generation GridView instance
             GridView gridview = findViewById(R.id.gridViewMember);
 
-            //Reload this activity
+            // reload this grid view, MemberAdapter
             MemberAdapter adapter = new MemberAdapter(
                     getBaseContext(),
                     R.layout.grid_item_member,
                     memberNameList,
-                    memberImageIntegerList,
+                    memberImageList,
                     memberStatusList,
                     memberStatusColorList
             );
             gridview.setAdapter(adapter);
 
-            // Create a message handling object as an anonymous class.
+            // create a message handling object as an anonymous class.
             AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
                 public void onItemClick(
                         AdapterView parent,
@@ -210,267 +182,18 @@ public class HomeActivity extends AppCompatActivity {
                 ) {
                     Intent intent = new Intent(getApplication(), PersonActivity.class);
                     intent.putExtra(PERSON_ID, memberIdList.get(position));
+                    intent.putExtra(PERSON_NAME, memberNameList.get(position));
+                    intent.putExtra(PERSON_IMAGEID, memberImageList.get(position));
                     startActivity( intent );
                 }
             };
 
             gridview.setOnItemClickListener(mMessageClickedHandler);
 
-            // 10分ごとに
+            // for each 10 min
             handler.postDelayed(this, 1000 * 60 * 10);
         }
     };
-
-
-    // DB
-    public List<Integer> getMemberIdList() {
-
-        List<Integer> memberIdList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                MemberTable.ID
-        };
-        Cursor cursor = db.query(
-                MemberTable.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        Log.d("DB", "メンバーIDの総数:"+String.valueOf(cursor.getCount()));
-
-        while(cursor.moveToNext()) {
-            int memberID = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(MemberTable.ID)
-            );
-            memberIdList.add(memberID);
-        }
-        cursor.close();
-        mDbHelper.close();
-
-        return memberIdList;
-    }
-    public List<String> getMemberNameList() {
-
-        List<String> memberNameList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                MemberTable.ID,
-                MemberTable.COLUMN_NAME
-        };
-//        String selection = MemberTable.ID + " = ?"; // WHERE 句
-//        String[] selectionArgs = { String.valueOf(Id) };
-        Cursor cursor = db.query(
-                MemberTable.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        Log.d("DB", "メンバーの名前の総数:"+String.valueOf(cursor.getCount()));
-
-        while(cursor.moveToNext()) {
-            String memberName = cursor.getString(
-                    cursor.getColumnIndexOrThrow(MemberTable.COLUMN_NAME)
-            );
-            memberNameList.add(memberName);
-        }
-        cursor.close();
-        mDbHelper.close();
-        return memberNameList;
-    }
-    public List<String> getMemberImageList() {
-
-        List<String> memberImageList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                MemberTable.ID,
-                MemberTable.COLUMN_IMAGE,
-        };
-        Cursor cursor = db.query(
-                MemberTable.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        Log.d("DB", "メンバーの画像の総数:"+String.valueOf(cursor.getCount()));
-
-        while(cursor.moveToNext()) {
-            String memberImageID = cursor.getString(
-                    cursor.getColumnIndexOrThrow(MemberTable.COLUMN_IMAGE)
-            );
-            memberImageList.add(memberImageID);
-        }
-        cursor.close();
-        mDbHelper.close();
-        return memberImageList;
-    }
-    public List<String> getMemberStatusList() {
-
-        List<String> memberStatusList = new ArrayList<>();
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        // select column
-        String[] projection = {
-                MemberTable.ID,
-                MemberTable.COLUMN_STATUS,
-        };
-        Cursor cursor = db.query(
-                MemberTable.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        Log.d("DB", "メンバーの在室状況の総数:"+String.valueOf(cursor.getCount()));
-
-        while(cursor.moveToNext()) {
-            String memberStatus = cursor.getString(
-                    cursor.getColumnIndexOrThrow(MemberTable.COLUMN_STATUS)
-            );
-            memberStatusList.add(memberStatus);
-        }
-        cursor.close();
-        mDbHelper.close();
-        return memberStatusList;
-    }
-
-    public List<Integer> generatorMemberStatusColorList(
-            List<String> memberStatusList
-    ){
-        List<Integer> memberStatusListColor  = new ArrayList<>();
-
-        int color;
-
-        for (String status : memberStatusList) {
-            if (status.equals("入室")){
-                color = getResources().getColor(R.color.colorTypeA);
-            }
-            else{
-                color = getResources().getColor(R.color.colorTypeB);
-            }
-
-            memberStatusListColor.add(color);
-        }
-
-        return memberStatusListColor;
-    }
-
-    public void saveData(
-            String name,
-            String detail,
-            String image,
-            String address,
-            String calender,
-            String status
-    ){
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", name);
-        values.put("detail", detail);
-        values.put("image", image);
-        values.put("address", address);
-        values.put("calender", calender);
-        values.put("status", status);
-
-        long newRowId = db.insert("member", null, values);
-        Log.d("DB", "挿入"+name+String.valueOf(newRowId));
-
-        db.close();
-        mDbHelper.close();
-    }
-
-    /**
-     *   MemberTable.COLUMN_STATUS が 帰宅 になってる人を 遅刻 にします
-     */
-    public void updatePersonStatusLate() {
-
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DbContract.MemberTable.COLUMN_STATUS, "遅刻");
-        String selection = MemberTable.COLUMN_STATUS + " = ?";  // WHERE 句
-        String[] selectionArgs = { "帰宅" };
-
-        db.update(
-                DbContract.MemberTable.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs
-        );
-
-        db.close();
-        mDbHelper.close();
-    }
-    /**
-     *  MemberTable.COLUMN_STATUS が 遅刻 になってる人を 欠席 にします
-     */
-    public void updatePersonStatusAbsence() {
-
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DbContract.MemberTable.COLUMN_STATUS, "欠席");
-        String selection = MemberTable.COLUMN_STATUS + " = ?";  // WHERE 句
-        String[] selectionArgs = { "遅刻" };
-
-        db.update(
-                DbContract.MemberTable.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs
-        );
-
-        db.close();
-        mDbHelper.close();
-    }
-    /**
-     *  MemberTable.COLUMN_STATUS を 帰宅 にします
-     */
-    public void updatePersonStatusGohome() {
-
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DbContract.MemberTable.COLUMN_STATUS, "帰宅");
-
-        db.update(
-                DbContract.MemberTable.TABLE_NAME,
-                values,
-                null,
-                null
-        );
-
-        db.close();
-        mDbHelper.close();
-    }
 
     // calender
     private void preCheckCalender() {

@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 public class DeletePersonFlagment extends DialogFragment {
@@ -31,7 +29,9 @@ public class DeletePersonFlagment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        deletePerson(personId);
+                        // DB
+                        Db db = new Db(getActivity());
+                        db.deletePerson(personId);
 
                         // display toast
                         Toast toast = Toast.makeText(
@@ -79,30 +79,4 @@ public class DeletePersonFlagment extends DialogFragment {
 
         return builder.create();
     }
-
-    // DB
-    public void deletePerson(
-            int Id
-    ) {
-
-        DbHelper mDbHelper = new DbHelper(getActivity());
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        Log.d("DB", "ID:"+String.valueOf(Id));
-
-        String deleteSelection = DbContract.MemberTable.ID + " = ?"; // WHERE 句
-        String[] deleteSelectionArgs = { String.valueOf(Id) };
-        db.delete(
-                DbContract.MemberTable.TABLE_NAME,
-                deleteSelection,
-                deleteSelectionArgs
-        );
-
-        Log.d("DB", "メンバー削除 ID:"+String.valueOf(Id));
-
-        db.close();
-        mDbHelper.close();
-    }
-
-
 }

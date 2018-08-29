@@ -62,9 +62,10 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS_ERR_CODE = 1003;
 
-//    private static final String BUTTON_TEXT = "Call Google Calendar API";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
+
+    private Db db = new Db(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,9 +140,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         Spinner spinner = (Spinner)findViewById(R.id.selectThumbnail);
         String personThumbnail = (String)spinner.getSelectedItem();
 
-        Log.v("DB", "追加: "+personName+personAddress+personDetail+personCalenderId+personThumbnail);
-
-        saveData(
+        db.saveData(
                 personName,
                 personDetail,
                 personThumbnail,
@@ -167,36 +166,6 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         startActivity(intent);
 
         return true;
-    }
-
-    // DB
-    public void saveData(
-            String name,
-            String detail,
-            String image,
-            String address,
-            String calender,
-            String status
-    ){
-        DbHelper mDbHelper = new DbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DbContract.MemberTable.COLUMN_NAME, name);
-        values.put(DbContract.MemberTable.COLUMN_DETAIL, detail);
-        values.put(DbContract.MemberTable.COLUMN_IMAGE, image);
-        values.put(DbContract.MemberTable.COLUMN_ADDRESS, address);
-        values.put(DbContract.MemberTable.COLUMN_CALENDAR, calender);
-        values.put(DbContract.MemberTable.COLUMN_STATUS, status);
-
-        long newRowId = db.insert(
-                DbContract.MemberTable.TABLE_NAME,
-                null,
-                values
-        );
-        Log.d("DB", "挿入"+name+String.valueOf(newRowId));
-
-        db.close();
-        mDbHelper.close();
     }
 
     /**
