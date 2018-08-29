@@ -162,6 +162,10 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
     @Override
     protected void onPostExecute(Long eventId) {
 
+        if (listener != null) {
+            listener.onSuccess();
+        }
+
         Log.d("カレンダー", "在室状況を記録" );
 
         // display toast
@@ -171,11 +175,14 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
                 Toast.LENGTH_SHORT
         );
         toast.show();
-
     }
 
     @Override
     protected void onCancelled() {
+
+        if (listener != null) {
+            listener.onCancelled();
+        }
 
         Log.d("カレンダー", "在室状況の記録をキャンセル" );
 
@@ -188,13 +195,14 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
         toast.show();
     }
 
-//    private Listener listener;
-//
-//    void setListener(Listener listener) {
-//        this.listener = listener;
-//    }
-//
-//    interface Listener {
-//        void onSuccess(int count);
-//    }
+    private Listener listener;
+
+    void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    interface Listener {
+        void onSuccess();
+        void onCancelled();
+    }
 }

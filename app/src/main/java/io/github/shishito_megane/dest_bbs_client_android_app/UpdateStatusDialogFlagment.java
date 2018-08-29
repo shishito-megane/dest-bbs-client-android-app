@@ -106,6 +106,7 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
                             newStatusCode,
                             getActivity()
                     );
+                    register.setListener(createListener());
                     register.execute();
 
                     // Return HomeActivity(new created) and finish this activity
@@ -137,5 +138,39 @@ public class UpdateStatusDialogFlagment extends DialogFragment {
         });
 
         return builder.create();
+    }
+
+    private StatusRegistrationCalenderTask.Listener createListener() {
+
+        return new StatusRegistrationCalenderTask.Listener() {
+
+            @Override
+            public void onSuccess() {
+
+//                Log.d("カレンダー", "在室状況を記録" );
+//
+//                // display toast
+//                Toast toast = Toast.makeText(
+//                        getActivity(),
+//                        R.string.finish_update_status,
+//                        Toast.LENGTH_SHORT
+//                );
+//                toast.show();
+            }
+
+            @Override
+            public void onCancelled() {
+
+//                Log.d("カレンダー", "在室状況の記録をキャンセル" );
+//
+//                // display toast
+//                Toast toast = Toast.makeText(
+//                        getActivity(),
+//                        R.string.cancelled_update_status,
+//                        Toast.LENGTH_SHORT
+//                );
+//                toast.show();
+            }
+        };
     }
 }
