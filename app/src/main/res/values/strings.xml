@@ -33,6 +33,8 @@
     <string name="finish_calling_toast">this function implementation during.\nPlease call directly.</string>
     <string name="cancelled_calling_toast">I cancelled calling.</string>
     <!--<string name="absent_msg">Absent.\nIn the case of urgent business, please contact the below.\n%1$s</string>-->
+    <string name="email_subject">[%1$s] Call: %2$s</string>
+    <string name="email_body">(To those who are called) If you have a message, please fill in this text.</string>
 
     <!-- UpdateStatusDialogFlagment-->
     <string name="update_entering_room_title">Update status</string>

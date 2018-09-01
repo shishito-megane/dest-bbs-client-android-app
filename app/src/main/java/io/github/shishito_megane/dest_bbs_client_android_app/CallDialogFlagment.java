@@ -10,6 +10,11 @@ import android.widget.Toast;
 
 public class CallDialogFlagment extends DialogFragment {
 
+    SendMailTask sender;
+
+    String personAddress;
+    String personName;
+
     public Dialog onCreateDialog(Bundle savedInstanceState){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -17,6 +22,10 @@ public class CallDialogFlagment extends DialogFragment {
         // get msg and set
         builder.setTitle(R.string.call_dialog_title);
         builder.setMessage(R.string.call_dialog_msg);
+
+        // get ags
+        personAddress = getArguments().getString("personAddress");
+        personName = getArguments().getString("personName");
 
         // ok button
         builder.setPositiveButton(
@@ -26,24 +35,13 @@ public class CallDialogFlagment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                // todo; add calling function
-
-                // display toast
-                Toast toast = Toast.makeText(
+                sender = new SendMailTask(
                         getActivity(),
-                        R.string.finish_calling_toast,
-                        Toast.LENGTH_SHORT
+                        personName,
+                        personAddress
                 );
-                toast.show();
+                sender.execute();
 
-                // Return HomeActivity and finish this activity
-                Intent intent = new Intent(
-                        getActivity(),
-
-                        HomeActivity.class
-                );
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
             }
         });
 

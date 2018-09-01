@@ -1,6 +1,7 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,8 +21,10 @@ public class PersonActivity extends AppCompatActivity {
     String personDetail;
     String personCalender;
     String personStatus;
+    String personAddress;
 
     private Db db = new Db(this);
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,9 @@ public class PersonActivity extends AppCompatActivity {
         // get PERSON_STATUS
         personStatus = db.getPersonStatus(personId);
 
+        // get PERSON_ADDRESS
+        personAddress = db.getPersonAddress(personId);
+
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
         dialogCall.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +76,10 @@ public class PersonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CallDialogFlagment dialog = new CallDialogFlagment();
+                Bundle args = new Bundle();
+                args.putString("personName", personName);
+                args.putString("personAddress", personAddress);
+                dialog.setArguments(args);
                 dialog.show(getFragmentManager(), "call");
             }
         });
@@ -89,6 +99,9 @@ public class PersonActivity extends AppCompatActivity {
                 dialog.show(getFragmentManager(), "itsme");
             }
         });
+
+        // for each 3 min after
+        handler.postDelayed(r, 1000 * 60 * 3);
     }
 
     @Override
@@ -103,6 +116,20 @@ public class PersonActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
     }
+
+    final Runnable r = new Runnable() {
+        @Override
+        public void run() {
+
+            // Return HomeActivity and finish this activity
+            Intent intent = new Intent(
+                    getApplication(),
+                    HomeActivity.class
+            );
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }
+    };
 
     // set Menu on the Activity
     @Override

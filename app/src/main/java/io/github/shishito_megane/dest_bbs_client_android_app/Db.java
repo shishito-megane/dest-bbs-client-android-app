@@ -490,6 +490,61 @@ public class Db {
     }
 
     /**
+     * 引数のIdで指定された人のStatusを取得します
+     * @param Id 指定された人のId
+     * @return string Status
+     */
+    public String getPersonAddress(
+            int Id
+    ) {
+
+        List<String> memberAddressList = new ArrayList<>();
+        DbHelper mDbHelper = new DbHelper(this.context);
+        SQLiteDatabase reader = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                DbContract.MemberTable.ID,
+                DbContract.MemberTable.COLUMN_ADDRESS,
+        };
+        String selection = DbContract.MemberTable.ID + " = ?";
+        String[] selectionArgs = { String.valueOf(Id) };
+
+        Cursor cursor = reader.query(
+                DbContract.MemberTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // get total records value
+        int contentValue = cursor.getCount();
+        Log.d("DB", "該当メンバーの連絡先のレコード数:"+String.valueOf(contentValue));
+
+        // check
+        if (contentValue == 1){
+            Log.d("DB", "総数が1なので良い" );
+        } else {
+            Log.e("DB", "総数が1ではない" );
+        }
+
+        while(cursor.moveToNext()) {
+            String memberCalender = cursor.getString(
+                    cursor.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_ADDRESS)
+            );
+            memberAddressList.add(memberCalender);
+        }
+
+        cursor.close();
+        reader.close();
+        mDbHelper.close();
+
+        return memberAddressList.get(0);
+    }
+
+    /**
      * 引数のIdで指定された人のStatusを更新します
      *@param Id 指定された人のId
      * @param statusCode 変更後のStatus
