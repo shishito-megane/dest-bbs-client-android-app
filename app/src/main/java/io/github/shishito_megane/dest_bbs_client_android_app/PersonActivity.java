@@ -15,6 +15,13 @@ import android.widget.TextView;
 
 public class PersonActivity extends AppCompatActivity {
 
+    public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
+    public static final String PERSON_NAME = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_NAME";
+    public static final String PERSON_DETAIL = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_DETAIL";
+    public static final String PERSON_CALENDER = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_CALENDER";
+    public static final String PERSON_ADDRESS = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ADDRESS";
+    public static final String PERSON_IMAGEID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGEID";
+
     int personId;
     String personName;
     int personImageId;
@@ -31,7 +38,7 @@ public class PersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person);
 
-        // get PERSON_ID
+        // get person info
         Intent intent = getIntent();
         personId = intent.getIntExtra(
                 HomeActivity.PERSON_ID,
@@ -44,6 +51,9 @@ public class PersonActivity extends AppCompatActivity {
                 HomeActivity.PERSON_IMAGEID,
                 0
         );
+        personCalender = db.getPersonCalender(personId);
+        personAddress = db.getPersonAddress(personId);
+        personStatus = db.getPersonStatus(personId);
         Log.d("PersonActivity", "選択された人: "+ String.valueOf(personId));
 
         // set person image
@@ -59,15 +69,6 @@ public class PersonActivity extends AppCompatActivity {
         // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
-
-        // get PERSON_CALENDER
-        personCalender = db.getPersonCalender(personId);
-
-        // get PERSON_STATUS
-        personStatus = db.getPersonStatus(personId);
-
-        // get PERSON_ADDRESS
-        personAddress = db.getPersonAddress(personId);
 
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
@@ -141,6 +142,19 @@ public class PersonActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)  {
         switch (item.getItemId()) {
+            case R.id.menuPersonEdit:
+                Intent intent_edit = new Intent(
+                        this,
+                        PersonEditActivity.class
+                );
+                intent_edit.putExtra(PERSON_ID, personId);
+                intent_edit.putExtra(PERSON_NAME, personName);
+                intent_edit.putExtra(PERSON_DETAIL, personDetail);
+                intent_edit.putExtra(PERSON_CALENDER, personCalender);
+                intent_edit.putExtra(PERSON_ADDRESS, personAddress);
+//                intent_edit.putExtra(PERSON_IMAGEID, personImageId);
+                startActivity(intent_edit);
+                return true;
             case R.id.menuPersonDelete:
                 DeletePersonFlagment dialog = new DeletePersonFlagment();
                 Bundle args = new Bundle();

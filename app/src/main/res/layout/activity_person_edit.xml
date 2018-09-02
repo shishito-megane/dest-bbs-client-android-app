@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonEditActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewPersonSettingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/person_setting_title"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewEnterNameDescription"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/enter_person_name_description"
+                    android:text="@string/enter_person_name_description"
+                    android:textAlignment="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                    tools:text="@string/enter_person_name_description" />
+
+                <EditText
+                    android:id="@+id/editTextPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:ems="10"
+                    android:hint="@string/default_person_name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:text="@string/default_person_name"
+                    tools:text="@string/default_person_name" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewEnterAddressDescription"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/enter_person_address_description"
+                    android:text="@string/enter_person_address_description"
+                    android:textAlignment="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                    tools:text="@string/enter_person_address_description" />
+
+                <EditText
+                    android:id="@+id/editTextPersonAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:ems="10"
+                    android:hint="@string/pref_default_address"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:text="@string/pref_default_address"
+                    tools:text="@string/pref_default_address" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewEnterDetailDescription"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/enter_person_detail_description"
+                    android:text="@string/enter_person_detail_description"
+                    android:textAlignment="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                    tools:text="@string/enter_person_detail_description" />
+
+                <EditText
+                    android:id="@+id/editTextPersonDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:ems="10"
+                    android:hint="@string/default_person_detail"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:selectAllOnFocus="true"
+                    android:text="@string/default_person_detail"
+                    android:textAlignment="textStart"
+                    tools:text="@string/default_person_detail" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewCalenderSettingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/calender_setting_title"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewEnterCalenderIdDescription"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/enter_calender_id_description"
+                    android:text="@string/enter_calender_id_description"
+                    android:textAlignment="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                    tools:text="@string/enter_calender_id_description" />
+
+                <TextView
+                    android:id="@+id/textViewTextCalenderId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/default_person_calendar"
+                    android:singleLine="true"
+                    android:text="@string/default_person_calendar"
+                    android:textSize="18sp"
+                    tools:text="@string/default_person_calendar" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewCalenderIdResult"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:contentDescription="@string/create_new_calender_msg"
+                android:gravity="center_vertical"
+                android:text="@string/create_new_calender_msg"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                tools:text="@string/edit_calender_msg" />
+
+            <TextView
+                android:id="@+id/textViewThumbnailSettingTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/thumbnail_setting_title"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewEnterThumbnailDescription"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:contentDescription="@string/enter_thumbnail_description"
+                    android:text="@string/enter_thumbnail_description"
+                    android:textAlignment="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                    tools:text="@string/enter_thumbnail_description" />
+
+                <!--<EditText-->
+                <!--android:id="@+id/editTextThumbnail"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginEnd="24dp"-->
+                <!--android:layout_marginStart="24dp"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/default_person_image_id"-->
+                <!--android:inputType="text"-->
+                <!--android:text="@string/default_person_image_id"-->
+                <!--tools:text="@string/default_person_image_id" />-->
+
+                <!--<Spinner-->
+                    <!--android:id="@+id/selectThumbnail"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginStart="16dp"-->
+                    <!--android:entries="@array/image_ld_array"-->
+                    <!--android:spinnerMode="dialog"/>-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

@@ -25,6 +25,7 @@
     <string name="call_person">呼び出す</string>
     <string name="open_person_menu">私です</string>
     <!-- cf. "action_bar_help"-->
+    <string name="action_bar_person_edit">情報を編集</string>
     <string name="action_bar_person_delete">このメンバーを削除</string>
 
     <!-- CallDialogFlagment-->
@@ -76,8 +77,9 @@
     <string name="pref_title_address">デフォルトの連絡先</string>
     <string name="pref_default_address">foo\@gmail.com</string>
 
-    <!-- PersonAddActivity -->
+    <!-- PersonAddActivity & PersonEditActivity -->
     <string name="person_add_activity_title">メンバーの追加</string>
+    <string name="person_edit_activity_title">メンバー情報の編集</string>
     <string name="person_setting_title">個人情報の設定</string>
     <string name="enter_person_name_description">名前</string>
     <string name="default_person_name">山田 太郎</string>
@@ -91,7 +93,8 @@
     <string name="enter_calender_id_description">ID</string>
     <string name="default_person_calendar">xxx@group.calendar.google.com</string>
     <string name="create_new_calender_button">作成</string>
-    <string name="create_new_calender_msg">新たにカレンダーを作成する場合は作成ボタンを押してください</string>
+    <string name="create_new_calender_msg">新たにカレンダーを作成する場合は作成ボタンを押してください.</string>
+    <string name="edit_calender_msg">カレンダーIDは変更できません.</string>
     <string name="no_internet_connection_msg">インターネット接続を確認してください</string>
     <string name="install_google_play_service_msg">このアプリはGoogle Play Services が必要です.
         Google Play Services をインストールしアプリを再起動してください.</string>

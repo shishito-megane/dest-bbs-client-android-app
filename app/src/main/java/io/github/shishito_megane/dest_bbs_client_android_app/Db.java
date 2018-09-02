@@ -599,4 +599,46 @@ public class Db {
         writer.close();
         mDbHelper.close();
     }
+
+    /**
+     * 引数のIdで指定された人の情報を更新します
+     * @param Id 指定された人のId
+     * @param name 名前
+     * @param detail 自己紹介文
+     * @param image 画像ファイル名
+     * @param address 連絡先
+     * @param calender カレンダーID
+     */
+    public void updatePersonInfo(
+            int Id,
+            String name,
+            String detail,
+            String image,
+            String address,
+            String calender
+    ) {
+
+        DbHelper mDbHelper = new DbHelper(this.context);
+        SQLiteDatabase writer = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.MemberTable.COLUMN_NAME, name);
+        values.put(DbContract.MemberTable.COLUMN_DETAIL, detail);
+        values.put(DbContract.MemberTable.COLUMN_IMAGE, image);
+        values.put(DbContract.MemberTable.COLUMN_ADDRESS, address);
+        values.put(DbContract.MemberTable.COLUMN_CALENDAR, calender);
+
+        String selection = DbContract.MemberTable.ID + " = ?";
+        String[] selectionArgs = { String.valueOf(Id) };
+
+        writer.update(
+                DbContract.MemberTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        writer.close();
+        mDbHelper.close();
+    }
 }

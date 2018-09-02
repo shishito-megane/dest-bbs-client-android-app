@@ -24,6 +24,7 @@
     <string name="call_person">Call</string>
     <string name="open_person_menu">It is me</string>
     <!-- cf. "action_bar_help"-->
+    <string name="action_bar_person_edit">Edit this person</string>
     <string name="action_bar_person_delete">Delete this person</string>
 
     <!-- CallDialogFlagment-->
@@ -75,8 +76,9 @@
     <string name="pref_title_address">Default contact address</string>
     <string name="pref_default_address">foo\@gmail.com</string>
 
-    <!-- PersonAddActivity -->
+    <!-- PersonAddActivity & PersonEditActivity -->
     <string name="person_add_activity_title">Add member</string>
+    <string name="person_edit_activity_title">Edit member info</string>
     <string name="person_setting_title">Person information setting</string>
     <string name="enter_person_name_description">Name</string>
     <string name="default_person_name">Taro Yamada</string>
@@ -91,6 +93,7 @@
     <string name="default_person_calendar">xxx@group.calendar.google.com</string>
     <string name="create_new_calender_button">Create</string>
     <string name="create_new_calender_msg">If you create new calendar, push Create button.</string>
+    <string name="edit_calender_msg">Can not change.</string>
     <string name="no_internet_connection_msg">No network connection available.</string>
     <string name="install_google_play_service_msg">This app requires Google Play Services.
         Please install google Play Services on your device and relaunch this app.</string>
