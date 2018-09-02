@@ -30,10 +30,8 @@
     <!-- CallDialogFlagment-->
     <string name="call_dialog_title">呼出</string>
     <string name="call_dialog_msg">この人を呼び出しますか？</string>
-    <!--<string name="finish_calling_toast">呼び出しました.\nしばらくお待ちください．</string>-->
     <string name="finish_calling_toast">この機能は実装中です．\n申し訳ございませんが，中へ直接声をかけてください．</string>
     <string name="cancelled_calling_toast">呼び出しを中止しました．</string>
-    <!--<string name="absent_msg">只今席を外しております．\n急用の場合は次へご連絡ください．\n%1$s</string>-->
     <string name="email_subject">[%1$s] 呼出: %2$s</string>
     <string name="email_body">(呼出される方へ) 伝言がある場合こちらの本文にご記入ください． </string>
 
