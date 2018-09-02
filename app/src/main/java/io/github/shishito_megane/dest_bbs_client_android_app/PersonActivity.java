@@ -1,7 +1,10 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 
 public class PersonActivity extends AppCompatActivity {
 
@@ -20,11 +25,11 @@ public class PersonActivity extends AppCompatActivity {
     public static final String PERSON_DETAIL = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_DETAIL";
     public static final String PERSON_CALENDER = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_CALENDER";
     public static final String PERSON_ADDRESS = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ADDRESS";
-    public static final String PERSON_IMAGEID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGEID";
+    public static final String PERSON_IMAGE_URI = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGE_URI";
 
     int personId;
     String personName;
-    int personImageId;
+    Uri personImageUri;
     String personDetail;
     String personCalender;
     String personStatus;
@@ -47,28 +52,41 @@ public class PersonActivity extends AppCompatActivity {
         personName = intent.getStringExtra(
                 HomeActivity.PERSON_NAME
         );
-        personImageId = intent.getIntExtra(
-                HomeActivity.PERSON_IMAGEID,
-                0
-        );
+        personImageUri = Uri.parse(intent.getStringExtra(HomeActivity.PERSON_IMAGE_URI));
+        personDetail = db.getPersonDetail(personId);
         personCalender = db.getPersonCalender(personId);
         personAddress = db.getPersonAddress(personId);
         personStatus = db.getPersonStatus(personId);
         Log.d("PersonActivity", "選択された人: "+ String.valueOf(personId));
 
-        // set person image
-        ImageView imageViewPersonImage = findViewById(R.id.imageViewPerson);
-        imageViewPersonImage.setImageResource(personImageId);
-
-        // set person name (person id)
+        // set person info
         TextView textViewPersonID = findViewById(R.id.textViewPersonName);
         textViewPersonID.setText(personName);
-
-        // get PERSON_DETAIL
-        personDetail = db.getPersonDetail(personId);
-        // set person name (person id)
         TextView textViewPersonDetail = findViewById(R.id.textViewPersonDetail);
         textViewPersonDetail.setText(personDetail);
+        ImageView imageViewPersonImage = findViewById(R.id.imageViewPerson);
+        try{
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                    getContentResolver(), personImageUri
+            );
+            imageViewPersonImage.setImageBitmap(bitmap);
+        }catch (IOException e){
+            e.printStackTrace();
+            int memberImageIdInt = getResources().getIdentifier(
+                    "dog_1",
+                    "drawable",
+                    getPackageName()
+            );
+            imageViewPersonImage.setImageResource(memberImageIdInt);
+        }catch (SecurityException e){
+            e.printStackTrace();
+            int memberImageIdInt = getResources().getIdentifier(
+                    "dog_1",
+                    "drawable",
+                    getPackageName()
+            );
+            imageViewPersonImage.setImageResource(memberImageIdInt);
+        }
 
         // call button function
         Button dialogCall = findViewById(R.id.buttonCall);
@@ -152,7 +170,7 @@ public class PersonActivity extends AppCompatActivity {
                 intent_edit.putExtra(PERSON_DETAIL, personDetail);
                 intent_edit.putExtra(PERSON_CALENDER, personCalender);
                 intent_edit.putExtra(PERSON_ADDRESS, personAddress);
-//                intent_edit.putExtra(PERSON_IMAGEID, personImageId);
+                intent_edit.putExtra(PERSON_IMAGE_URI, personImageUri.toString());
                 startActivity(intent_edit);
                 return true;
             case R.id.menuPersonDelete:

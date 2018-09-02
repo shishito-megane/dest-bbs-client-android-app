@@ -1,6 +1,9 @@
 package io.github.shishito_megane.dest_bbs_client_android_app;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MemberAdapter extends BaseAdapter {
@@ -19,17 +23,18 @@ public class MemberAdapter extends BaseAdapter {
     }
 
     private List<String> mMemberNames;
-    private List<Integer> mThumbIds;
+    private List<Uri> mThumbUris;
     private List<String> mMemberStatus;
     private List<Integer> mMemberStatusColor;
     private LayoutInflater mLayoutInflater;
     private int layoutId;
+    private Context context;
 
     MemberAdapter(
             Context context,
             int layoutId,
             List<String> memberList,
-            List<Integer> imageList,
+            List<Uri> imageList,
             List<String> memberStatus,
             List<Integer> memberColorStatus
     ) {
@@ -38,7 +43,8 @@ public class MemberAdapter extends BaseAdapter {
         this.mLayoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.layoutId = layoutId;
-        mThumbIds = imageList;
+        this.context = context;
+        mThumbUris = imageList;
         mMemberNames = memberList;
         mMemberStatus = memberStatus;
         mMemberStatusColor = memberColorStatus;
@@ -49,7 +55,6 @@ public class MemberAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             convertView = mLayoutInflater.inflate(
-//                    R.layout.grid_item_member,
                     layoutId,
                     parent,
                     false
@@ -69,16 +74,39 @@ public class MemberAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.imageViewMemberImage.setImageResource(mThumbIds.get(position));
+        // set person info
         holder.textViewMemberName.setText(mMemberNames.get(position));
         holder.textViewMemberStatus.setText(mMemberStatus.get(position));
         holder.textViewMemberStatus.setBackgroundColor(mMemberStatusColor.get(position));
+        // set person image (thumbnail)
+        try{
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                    this.context.getContentResolver(), mThumbUris.get(position)
+            );
+            holder.imageViewMemberImage.setImageBitmap(bitmap);
+        }catch (IOException e){
+            e.printStackTrace();
+            int memberImageIdInt = this.context.getResources().getIdentifier(
+                    "dog_1",
+                    "drawable",
+                    this.context.getPackageName()
+            );
+            holder.imageViewMemberImage.setImageResource(memberImageIdInt);
+        }catch (SecurityException e){
+            e.printStackTrace();
+            int memberImageIdInt = this.context.getResources().getIdentifier(
+                    "dog_1",
+                    "drawable",
+                    this.context.getPackageName()
+            );
+            holder.imageViewMemberImage.setImageResource(memberImageIdInt);
+        }
 
         return convertView;
     }
 
     public int getCount() {
-        return mThumbIds.size();
+        return mThumbUris.size();
     }
 
     public Object getItem(int position) {
