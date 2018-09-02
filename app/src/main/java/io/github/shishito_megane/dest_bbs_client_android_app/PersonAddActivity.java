@@ -18,26 +18,28 @@ import com.google.api.services.calendar.model.*;
 
 import android.Manifest;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,14 +58,20 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
     private EditText editTextCalenderId;
     ProgressDialog mProgress;
     private String personName;
+    private ImageView imageViewPersonImage;
+    private TextView textViewPersonImageResult;
 
     static final int REQUEST_ACCOUNT_PICKER_ERR_CODE = 1000;
     static final int REQUEST_AUTHORIZATION_ERR_CODE = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS_ERR_CODE = 1003;
 
+    static final int REQUEST_PICK_IMAGE_FILE = 2001;
+
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {CalendarScopes.CALENDAR};
+
+
 
     private Db db = new Db(this);
 
@@ -81,6 +89,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         final EditText editTextPersonAddress = findViewById(R.id.editTextPersonAddress);
         editTextPersonAddress.setText(address);
 
+        // calender id
         final Button buttonCreateNewCalender = (Button)findViewById(R.id.buttonCreateNewCalender);
         editTextCalenderId = (EditText)findViewById(R.id.editTextCalenderId);
         textViewCalenderIdResult = (TextView)findViewById(R.id.textViewCalenderIdResult);
@@ -119,6 +128,31 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
                 Arrays.asList(SCOPES)
         ).setBackOff(new ExponentialBackOff());
 
+        // サムネイル選択
+        final Button buttonSelectImage = (Button)findViewById(R.id.buttonSelectImage);
+        imageViewPersonImage = (ImageView)findViewById(R.id.imageViewPersonImage);
+        textViewPersonImageResult = (TextView)findViewById(R.id.textViewPersonImageResult);
+
+        buttonSelectImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                textViewPersonImageResult.setText("");
+
+                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file browser.
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                // Filter to show only images, using the image MIME data type.
+                // it would be "*/*".
+                intent.setType("image/*");
+
+                startActivityForResult(intent, REQUEST_PICK_IMAGE_FILE);
+            }
+        });
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,8 +171,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
         String personDetail = editTextPersonDetail.getText().toString();
         EditText editTextCalenderId = (EditText)findViewById(R.id.editTextCalenderId);
         String personCalenderId = editTextCalenderId.getText().toString();
-        Spinner spinner = (Spinner)findViewById(R.id.selectThumbnail);
-        String personThumbnail = (String)spinner.getSelectedItem();
+        String personThumbnail = textViewPersonImageResult.getText().toString();
 
         db.saveData(
                 personName,
@@ -167,6 +200,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
         return true;
     }
+
 
     /**
      * Google Calendar API の呼び出しの事前条件を確認し、条件を満たしていればAPIを呼び出す。
@@ -278,7 +312,11 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
     }
 
     /**
-     * アカウント選択や認証など、呼び出し先のActivityから戻ってきた際に呼び出される。
+     * 呼び出し先のActivityから戻ってきた際に呼び出される。
+     * REQUEST_GOOGLE_PLAY_SERVICES: google calender api
+     * REQUEST_ACCOUNT_PICKER_ERR_CODE: google calender api
+     * REQUEST_AUTHORIZATION_ERR_CODE: google calender api
+     * REQUEST_PICK_IMAGE_FILE: person image (thumbnail) select
      *
      * @param requestCode Activityの呼び出し時に指定したコード
      * @param resultCode  呼び出し先のActivityでの処理結果を表すコード
@@ -292,6 +330,8 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
     ) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+
+            // google calender api
             case REQUEST_GOOGLE_PLAY_SERVICES:
                 if (resultCode != RESULT_OK) {
                     textViewCalenderIdResult.setText(
@@ -302,6 +342,7 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
                 }
                 break;
 
+            // google calender api
             case REQUEST_ACCOUNT_PICKER_ERR_CODE:
                 if (resultCode == RESULT_OK && data != null && data.getExtras() != null) {
                     String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
@@ -316,11 +357,27 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
                 }
                 break;
 
+            // google calender api
             case REQUEST_AUTHORIZATION_ERR_CODE:
                 if (resultCode == RESULT_OK) {
                     getResultsFromApi();
                 }
                 break;
+
+            // person image
+            case REQUEST_PICK_IMAGE_FILE:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+
+                    Uri uri = data.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        imageViewPersonImage = (ImageView)findViewById(R.id.imageViewPersonImage);
+                        imageViewPersonImage.setImageBitmap(bitmap);
+                        textViewPersonImageResult.setText(uri.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
         }
     }
 
