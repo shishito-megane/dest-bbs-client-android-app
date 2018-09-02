@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -104,9 +105,9 @@ public class Db {
      * DBから登録されているMemberImageを取得します
      * @return list MemberImageのリスト
      */
-    public List<Integer> getMemberImageList() {
+    public List<Uri> getMemberImageList() {
 
-        List<Integer> memberImageList = new ArrayList<>();
+        List<Uri> memberImageList = new ArrayList<>();
         DbHelper mDbHelper = new DbHelper(this.context);
         SQLiteDatabase reader = mDbHelper.getReadableDatabase();
 
@@ -131,15 +132,16 @@ public class Db {
         // member名をR.drawable.名前としてintに変換してarrayに登録
         // Resource ID (Member Image ID)
         while(cursor.moveToNext()) {
-            String memberImageIdString = cursor.getString(
+            String memberImageUriString = cursor.getString(
                     cursor.getColumnIndexOrThrow(DbContract.MemberTable.COLUMN_IMAGE)
             );
-            int memberImageIdInt = this.context.getResources().getIdentifier(
-                    memberImageIdString,
-                    "drawable",
-                    this.context.getPackageName()
-            );
-            memberImageList.add(memberImageIdInt);
+            Uri memberImageUri = Uri.parse(memberImageUriString);
+//            int memberImageIdInt = this.context.getResources().getIdentifier(
+//                    memberImageIdString,
+//                    "drawable",
+//                    this.context.getPackageName()
+//            );
+            memberImageList.add(memberImageUri);
         }
 
         cursor.close();

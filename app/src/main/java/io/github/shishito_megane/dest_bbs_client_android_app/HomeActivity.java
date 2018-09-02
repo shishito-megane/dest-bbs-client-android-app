@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static final String PERSON_ID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_ID";
     public static final String PERSON_NAME = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_NAME";
-    public static final String PERSON_IMAGEID = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGEID";
+    public static final String PERSON_IMAGE_URI = "io.github.shishito_megane.dest_bbs_client_android_app.PERSON_IMAGE_URI";
 
     private Db db = new Db(this);
     final Handler handler = new Handler();
@@ -144,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
 
             // get member info
             final List<String> memberNameList = db.getMemberNameList();
-            final List<Integer> memberImageList = db.getMemberImageList();
+            final List<Uri> memberImageList = db.getMemberImageList();
             final List<String> memberStatusList = db.getMemberStatusList();
 
             // generate member status color list
@@ -177,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplication(), PersonActivity.class);
                     intent.putExtra(PERSON_ID, memberIdList.get(position));
                     intent.putExtra(PERSON_NAME, memberNameList.get(position));
-                    intent.putExtra(PERSON_IMAGEID, memberImageList.get(position));
+                    intent.putExtra(PERSON_IMAGE_URI, memberImageList.get(position).toString());
                     startActivity( intent );
                 }
             };
