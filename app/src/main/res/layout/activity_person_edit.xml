@@ -184,9 +184,9 @@
                 android:id="@+id/textViewCalenderIdResult"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:contentDescription="@string/create_new_calender_msg"
+                android:contentDescription="@string/edit_calender_msg"
                 android:gravity="center_vertical"
-                android:text="@string/create_new_calender_msg"
+                android:text="@string/edit_calender_msg"
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView"
@@ -205,7 +205,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
@@ -221,27 +221,37 @@
                     app:layout_constraintTop_toBottomOf="@+id/scrollView"
                     tools:text="@string/enter_thumbnail_description" />
 
-                <!--<EditText-->
-                <!--android:id="@+id/editTextThumbnail"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginEnd="24dp"-->
-                <!--android:layout_marginStart="24dp"-->
-                <!--android:ems="10"-->
-                <!--android:hint="@string/default_person_image_id"-->
-                <!--android:inputType="text"-->
-                <!--android:text="@string/default_person_image_id"-->
-                <!--tools:text="@string/default_person_image_id" />-->
+                <Button
+                    android:id="@+id/buttonSelectImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/select_thumbnail_button"
+                    android:text="@string/select_thumbnail_button"
+                    tools:text="@string/select_thumbnail_button" />
 
-                <!--<Spinner-->
-                    <!--android:id="@+id/selectThumbnail"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginStart="16dp"-->
-                    <!--android:entries="@array/image_ld_array"-->
-                    <!--android:spinnerMode="dialog"/>-->
+                <ImageView
+                    android:id="@+id/imageViewPersonImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/person_image_view_detail"/>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewPersonImageResult"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:contentDescription="@string/select_thumbnail_msg"
+                android:gravity="center_vertical"
+                android:text="@string/select_thumbnail_msg"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView"
+                tools:text="" />
 
         </LinearLayout>
 

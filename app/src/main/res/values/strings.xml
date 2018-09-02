@@ -111,6 +111,7 @@
     <string name="enter_thumbnail_description">Filename</string>
     <string name="select_thumbnail_button">Select</string>
     <string name="select_thumbnail_msg">Please push Select button.</string>
+    <string name="cannot_find_thumbnail_msg">No images found during registration.Please select again.</string>
     <string name="default_person_image_id">dog_1</string>
     <string-array name="image_ld_array">
         <item>dog_1</item>

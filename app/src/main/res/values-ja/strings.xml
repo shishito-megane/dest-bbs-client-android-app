@@ -112,6 +112,7 @@
     <string name="enter_thumbnail_description">ファイル名</string>
     <string name="select_thumbnail_button">選択</string>
     <string name="select_thumbnail_msg">選択ボタンを押して画像を選択してください．</string>
+    <string name="cannot_find_thumbnail_msg">登録時の画像が見つかりませんでした．選択し直してください．</string>
     <string name="default_person_image_id">dog_1</string>
     <string-array name="image_ld_array">
         <item>dog_1</item>
