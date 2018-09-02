@@ -21,6 +21,7 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
     private String calenderOwnerId;
     private String statusCode;
     private Context context; // XXX: Listenerをおいて対処する
+    private Exception mLastError = null;
 
     StatusRegistrationCalenderTask(
             String calenderOwnerId,
@@ -67,11 +68,16 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
             eventColorKey = "6";    // Tangerine(オレンジ色)
         }
 
-
         // get calenderId from calenderOwnerId
         final long calenderId = this.getCalenderId(
                 this.calenderOwnerId
         );
+        // カレンダーが見つからなかったとき
+        if (calenderId == -1){
+            cancel(true);
+            return null;
+        }
+
         Log.d("カレンダー","ローカルcalenderId: "+String.valueOf(calenderId));
 
         final long startTime = new Date().getTime() + 2 * 60 * 1000;
@@ -91,6 +97,7 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
     private long getCalenderId(String calenderOwnerId) {
 
         List<Long> calenderOwnerIdList = new ArrayList<>();
+        long calenderId;
 
         // クエリ条件を設定する
         final Uri uri = CalendarContract.Calendars.CONTENT_URI;
@@ -116,18 +123,28 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
         // check
         if (calContentValue == 1){
             Log.d("カレンダー", "総数が1なので良い" );
+        } else if(calContentValue == 0){
+            Log.e("カレンダー", "総数が0" );
         } else {
             Log.e("カレンダー", "総数が1ではない" );
         }
 
         Log.d("カレンダー", "ID: "+calenderOwnerId);
         while (cur.moveToNext()) {
-            final long calenderId = cur.getLong(CALENDAR_PROJECTION_IDX_ID);
-            calenderOwnerIdList.add(calenderId);
+            final long c = cur.getLong(CALENDAR_PROJECTION_IDX_ID);
+            calenderOwnerIdList.add(c);
+        }
+        cur.close();
+
+        try{
+            calenderId = calenderOwnerIdList.get(0);
+        }catch (IndexOutOfBoundsException e){
+            // 見つからないときは -1 を返す
+            calenderId = -1;
+            mLastError = e;
         }
 
-        cur.close();
-        return  calenderOwnerIdList.get(0);
+        return  calenderId;
     }
 
     private long addEvent(
@@ -184,15 +201,34 @@ public class StatusRegistrationCalenderTask extends AsyncTask<Long, Integer, Lon
             listener.onCancelled();
         }
 
-        Log.d("カレンダー", "在室状況の記録をキャンセル" );
-
-        // display toast
-        Toast toast = Toast.makeText(
-                this.context,
-                this.context.getString(R.string.cancelled_update_status),
-                Toast.LENGTH_SHORT
-        );
-        toast.show();
+        if (mLastError != null) {
+            if (mLastError instanceof IndexOutOfBoundsException) {
+                // display toast
+                Toast toast = Toast.makeText(
+                        this.context,
+                        this.context.getString(R.string.cannot_find_calender_msg),
+                        Toast.LENGTH_SHORT
+                );
+                toast.show();
+            } else {
+                // display toast
+                Toast toast = Toast.makeText(
+                        this.context,
+                        mLastError.getMessage(),
+                        Toast.LENGTH_SHORT
+                );
+                toast.show();
+            }
+        } else {
+            Log.d("カレンダー", "在室状況の記録をキャンセル" );
+            // display toast
+            Toast toast = Toast.makeText(
+                    this.context,
+                    this.context.getString(R.string.cancelled_update_status),
+                    Toast.LENGTH_SHORT
+            );
+            toast.show();
+        }
     }
 
     private Listener listener;
