@@ -366,12 +366,10 @@ public class PersonAddActivity extends AppCompatActivity implements EasyPermissi
 
             // person image
             case REQUEST_PICK_IMAGE_FILE:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-
+                if (resultCode == Activity.RESULT_OK && data.getData() != null) {
                     Uri uri = data.getData();
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        imageViewPersonImage = (ImageView)findViewById(R.id.imageViewPersonImage);
                         imageViewPersonImage.setImageBitmap(bitmap);
                         textViewPersonImageResult.setText(uri.toString());
                     } catch (IOException e) {
